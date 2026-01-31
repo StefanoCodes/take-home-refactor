@@ -1,12 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
-export async function proxy(request: NextRequest) {
-	const sessionCookie = getSessionCookie(request);
+const defaultLoginUrl = "/login";
 
+const authRoutes = [defaultLoginUrl];
+
+export async function proxy(request: NextRequest) {
+	const pathName = request.nextUrl.pathname;
+	const isAuthRoute = authRoutes.includes(pathName);
 	// This is the recommended approach to optimistically redirect users
 	// also do the auth check in each page this is just an optimistic redirect NOT secure.
+	const sessionCookie = getSessionCookie(request);
+
 	if (!sessionCookie) {
+		if (isAuthRoute) {
+			return NextResponse.next();
+		}
+		return NextResponse.redirect(new URL(defaultLoginUrl, request.url));
+	}
+
+	if (isAuthRoute) {
 		return NextResponse.redirect(new URL("/", request.url));
 	}
 
@@ -14,5 +27,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-	matcher: ["/dashboard"], // Specify the routes the middleware applies to
+	matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
 };
