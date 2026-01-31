@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { Pool } from "pg";
+import { nextCookies } from "better-auth/next-js";
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) {
@@ -14,7 +15,7 @@ export const auth = betterAuth({
 		enabled: true,
 		minPasswordLength: 6,
 	},
-	plugins: [],
+	plugins: [nextCookies()],
 	advanced: {
 		disableCSRFCheck: true,
 	},

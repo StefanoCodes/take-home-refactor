@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 import { actionClient, ActionError } from "@/lib/action-client";
 import { getUserRole } from "@/lib/data-access/auth/get-user-role";
 import { loginSchema } from "@/lib/validations/auth";
-import { headers } from "next/headers";
+import { headers, cookies } from "next/headers";
 
 const CREDENTIALS = {
 	sponsor: { email: "sponsor@example.com", password: "password" },

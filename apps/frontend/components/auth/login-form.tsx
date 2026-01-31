@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -8,52 +8,51 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
+} from '@/components/ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { loginAction } from '@/lib/server-actions/auth/login'
-import { loginSchema, type LoginSchemaType } from '@/lib/validations/auth'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
+} from '@/components/ui/select';
+import { loginAction } from '@/lib/server-actions/auth/login';
+import { loginSchema, type LoginSchemaType } from '@/lib/validations/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 export function LoginForm() {
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       role: 'sponsor',
     },
-  })
+  });
 
-  const isPending = form.formState.isSubmitting
+  const isPending = form.formState.isSubmitting;
 
   const onSubmit = async (data: LoginSchemaType) => {
     try {
-      const result = await loginAction(data)
-      const { data: payload, serverError } = result
+      const result = await loginAction(data);
+      const { data: payload, serverError } = result;
 
       if (serverError || !payload?.success) {
-        toast.error(payload?.message ?? serverError ?? 'Login failed')
-        return
+        return toast.error(payload?.message ?? serverError ?? 'Login failed');
       }
 
-      toast.success(payload.message)
-      router.push(payload.redirectTo)
+      toast.success(payload.message);
+      router.push(payload.redirectTo);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Login failed')
+      toast.error(err instanceof Error ? err.message : 'Login failed');
     }
-  }
+  };
 
-  const selectedRole = form.watch('role')
+  const selectedRole = form.watch('role');
 
   return (
     <Form {...form}>
@@ -88,5 +87,5 @@ export function LoginForm() {
         </Button>
       </form>
     </Form>
-  )
+  );
 }

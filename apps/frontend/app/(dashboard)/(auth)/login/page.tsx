@@ -1,12 +1,18 @@
 import { isAuthenticated } from '@/lib/auth-helpers.server';
 import { redirect } from 'next/navigation';
 import { LoginForm } from '@/components/auth/login-form';
+import { getUserRole } from '@/lib/data-access/auth/get-user-role';
 
 export default async function LoginPage() {
   const { user } = await isAuthenticated();
 
   if (user) {
-    // TODO: redirect based on the role of the user so sponsor goes to /dashboard/sponsor and publisher goes to /dashboard/publisher
+    const userRole = await getUserRole(user.id);
+    if (userRole.role === 'sponsor') {
+      return redirect('/dashboard/sponsor');
+    } else if (userRole.role === 'publisher') {
+      return redirect('/dashboard/publisher');
+    }
     return redirect('/');
   }
 
