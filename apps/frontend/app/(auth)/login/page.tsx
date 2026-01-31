@@ -7,10 +7,10 @@ export default async function LoginPage() {
   const { user } = await isAuthenticated();
 
   if (user) {
-    const userRole = await getUserRole(user.id);
-    if (userRole.role === 'sponsor') {
+    const { role } = await getUserRole(user.id);
+    if (role === 'sponsor') {
       return redirect('/dashboard/sponsor');
-    } else if (userRole.role === 'publisher') {
+    } else if (role === 'publisher') {
       return redirect('/dashboard/publisher');
     }
     return redirect('/');

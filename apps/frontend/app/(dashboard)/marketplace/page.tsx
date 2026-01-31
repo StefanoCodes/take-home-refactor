@@ -1,11 +1,19 @@
-import { AdSlotGrid } from '../../../components/marketing/marketplace/ad-slot-grid';
+import { isAuthenticated } from '@/lib/auth-helpers.server';
+import { AdSlotGrid } from '../../../components/dashboard/marketplace/ad-slot-grid';
+import { redirect } from 'next/navigation';
 
 // FIXME: This page fetches all ad slots client-side. Consider:
 // 1. Server-side pagination with searchParams
 // 2. Filtering by category, price range, slot type
 // 3. Search functionality
 
-export default function MarketplacePage() {
+export default async function MarketplacePage() {
+  const { isLoggedIn } = await isAuthenticated();
+
+  if (!isLoggedIn) {
+    return redirect('/login');
+  }
+
   return (
     <div className="space-y-6">
       <div>

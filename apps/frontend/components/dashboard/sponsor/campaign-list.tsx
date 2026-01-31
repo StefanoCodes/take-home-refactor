@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getCampaigns } from '@/lib/api';
-import { authClient } from '@/auth-client';
+import { authClient } from '@/lib/auth-client';
 import { CampaignCard } from './campaign-card';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4291';

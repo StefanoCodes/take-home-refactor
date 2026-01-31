@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getAdSlots } from '@/lib/api';
-import { authClient } from '@/auth-client';
+import { authClient } from '@/lib/auth-client';
 import { AdSlotCard } from './ad-slot-card';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4291';

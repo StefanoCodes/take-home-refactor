@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth.server";
 import { actionClient, ActionError } from "@/lib/action-client";
 import { getUserRole } from "@/lib/data-access/auth/get-user-role";
 import { loginSchema } from "@/lib/validations/auth";

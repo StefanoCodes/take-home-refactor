@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
-import { Nav } from '@/components/nav';
+import { Nav } from '@/components/layout/navbar/nav';
 
 // TODO: Add ErrorBoundary wrapper for graceful error handling
 // TODO: Consider adding a loading.tsx for Suspense boundaries

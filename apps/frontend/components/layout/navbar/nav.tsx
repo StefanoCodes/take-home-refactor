@@ -1,0 +1,31 @@
+import Link from 'next/link';
+import { isAuthenticated } from '@/lib/auth-helpers.server';
+import { getUserRole } from '@/lib/data-access/auth/get-user-role';
+import { NavLinks } from './nav-links';
+import { NavAuthUser } from './nav-auth-user';
+
+export async function Nav() {
+  const { isLoggedIn, user } = await isAuthenticated();
+
+  let role: 'sponsor' | 'publisher' | null = null;
+
+  if (isLoggedIn && user) {
+    const result = await getUserRole(user.id);
+    role = result.role;
+  }
+
+  return (
+    <header className="border-b border-[--color-border]">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between p-4">
+        <Link href="/" className="text-xl font-bold text-[--color-primary]">
+          Anvara
+        </Link>
+
+        <div className="flex items-center gap-6">
+          <NavLinks role={role} />
+          <NavAuthUser />
+        </div>
+      </nav>
+    </header>
+  );
+}

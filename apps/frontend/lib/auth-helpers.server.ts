@@ -1,5 +1,5 @@
 import "server-only";
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth.server";
 import { headers } from "next/headers";
 import { cache } from "react";
 // cache will memoize the result of the function for the render pass so its not a cache but rather a memoization cache so if in the render pass there are multiple components calling this same function the first result will resolve and be used rather than having multiple callls (perfromance boost)
