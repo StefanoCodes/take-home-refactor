@@ -2,7 +2,7 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
 import { getUserRole } from '@/lib/auth-helpers';
-import { AdSlotList } from '../../../components/dashboard/publisher/ad-slot-list';
+import { AdSlotList } from '../../../../components/dashboard/publisher/ad-slot-list';
 
 export default async function PublisherDashboard() {
   const session = await auth.api.getSession({

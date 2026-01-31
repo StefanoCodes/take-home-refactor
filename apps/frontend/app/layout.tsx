@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
+import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
-import { Nav } from '../components/nav';
+import { Nav } from '@/components/nav';
 
 // TODO: Add ErrorBoundary wrapper for graceful error handling
 // TODO: Consider adding a loading.tsx for Suspense boundaries
@@ -15,13 +16,12 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // HINT: If using React Query, you would wrap children with QueryClientProvider here
-  // See: https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr
   return (
     <html lang="en">
-      <body className="min-h-screen antialiased">
+      <body className="min-h-dvh antialiased">
         <Nav />
-        <main className="mx-auto max-w-6xl p-4">{children}</main>
+        {children}
+        <Toaster richColors position="top-center" />
       </body>
     </html>
   );

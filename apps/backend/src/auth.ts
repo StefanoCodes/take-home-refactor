@@ -1,35 +1,59 @@
-import { type Request, type Response, type NextFunction } from 'express';
+import { betterAuth } from 'better-auth';
+import { fromNodeHeaders } from 'better-auth/node';
+import { Pool } from 'pg';
+import type { Request, Response, NextFunction } from 'express';
 
-// TODO: Add sponsorId and publisherId to the user interface
-// These are needed to scope queries to the user's own data
+/**
+ * Better Auth instance for session validation.
+ * Shares the same database and secret as the frontend instance.
+ */
+export const auth = betterAuth({
+  database: new Pool({ connectionString: process.env.DATABASE_URL }),
+  secret: process.env.BETTER_AUTH_SECRET || 'fallback-secret-for-dev',
+  emailAndPassword: {
+    enabled: true,
+  },
+});
+
+/**
+ * Authenticated request — `req.user` and `req.session` are
+ * guaranteed to exist after `authenticate` middleware passes.
+ */
 export interface AuthRequest extends Request {
-  user?: {
+  user: {
     id: string;
     email: string;
-    role: 'SPONSOR' | 'PUBLISHER';
-    // FIXME: Missing sponsorId and publisherId fields
+    name: string;
+    image?: string | null;
+    emailVerified: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+  session: {
+    id: string;
+    userId: string;
+    token: string;
+    expiresAt: Date;
+    createdAt: Date;
+    updatedAt: Date;
   };
 }
 
-// TODO: This middleware doesn't actually validate anything!
-// It should:
-// 1. Check for Authorization header or session cookie
-// 2. Validate the token/session
-// 3. Look up the user in the database
-// 4. Attach user info to req.user
-// 5. Return 401 if invalid
-export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction): void {
-  // Better Auth will handle validation via headers
-  // This is a placeholder for protected routes
+/**
+ * Middleware that validates the Better Auth session cookie.
+ * Attaches `req.user` and `req.session` on success, returns 401 otherwise.
+ */
+export async function authenticate(req: Request, res: Response, next: NextFunction) {
+  const result = await auth.api.getSession({
+    headers: fromNodeHeaders(req.headers),
+  });
+
+  if (!result) {
+    res.status(401).json({ error: 'Not authenticated' });
+    return;
+  }
+
+  (req as AuthRequest).user = result.user;
+  (req as AuthRequest).session = result.session;
   next();
-}
-
-export function roleMiddleware(allowedRoles: Array<'SPONSOR' | 'PUBLISHER'>) {
-  return (req: AuthRequest, res: Response, next: NextFunction): void => {
-    if (!req.user || !allowedRoles.includes(req.user.role)) {
-      res.status(403).json({ error: 'Insufficient permissions' });
-      return;
-    }
-    next();
-  };
 }

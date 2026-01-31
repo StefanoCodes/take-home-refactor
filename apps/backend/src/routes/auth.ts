@@ -1,4 +1,5 @@
 import { Router, type Request, type Response, type IRouter } from 'express';
+import { authenticate, type AuthRequest } from '../auth.js';
 import { prisma } from '../db.js';
 
 const router: IRouter = Router();
@@ -14,17 +15,16 @@ router.post('/login', async (_req: Request, res: Response) => {
   });
 });
 
-// GET /api/auth/me - Get current user (for API clients)
-router.get('/me', async (req: Request, res: Response) => {
-  // TODO: Challenge 3 - Implement auth middleware to validate session
-  // For now, return unauthorized
-  res.status(401).json({ error: 'Not authenticated' });
+// GET /api/auth/me - Get current authenticated user
+router.get('/me', authenticate, async (req: Request, res: Response) => {
+  const { user } = req as AuthRequest;
+  res.json({ user });
 });
 
 // GET /api/auth/role/:userId - Get user role based on Sponsor/Publisher records
 router.get('/role/:userId', async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const userId = Array.isArray(req.params.userId) ? req.params.userId[0] : req.params.userId;
 
     // Check if user is a sponsor
     const sponsor = await prisma.sponsor.findUnique({

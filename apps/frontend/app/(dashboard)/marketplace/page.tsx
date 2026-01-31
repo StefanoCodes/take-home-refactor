@@ -1,4 +1,4 @@
-import { AdSlotGrid } from '../../components/marketing/marketplace/ad-slot-grid';
+import { AdSlotGrid } from '../../../components/marketing/marketplace/ad-slot-grid';
 
 // FIXME: This page fetches all ad slots client-side. Consider:
 // 1. Server-side pagination with searchParams

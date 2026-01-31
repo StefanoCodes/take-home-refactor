@@ -4,7 +4,7 @@ import {
 } from "next-safe-action";
 import { z } from "zod";
 import { Logger } from "./logger";
-import { isAuthenticated } from "./auth.server";
+import { isAuthenticated } from "./auth-helpers.server";
 
 export class ActionError extends Error {}
 
@@ -51,10 +51,11 @@ export const actionClient = createSafeActionClient({
 	// And then return the result of the awaited action.
 	return result;
 });
+
 // (protected) authentication action, this ensures that the business logic ran has the user authenticated and we pass the user context to the next function.
 export const authActionClient = actionClient.use(async ({ next }) => {
 	const { isLoggedIn, session, user } = await isAuthenticated();
-	if (!isLoggedIn || !user) throw new Error("Unauthorized");
+	if (!isLoggedIn) throw new Error("Unauthorized");
 
 	return next({
 		ctx: {
