@@ -1,22 +1,19 @@
-import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { auth } from '@/auth';
-import { getUserRole } from '@/lib/auth-helpers';
+import { getUserRole } from '@/lib/data-access/auth/get-user-role';
 import { AdSlotList } from '../../../../components/dashboard/publisher/ad-slot-list';
+import { isAuthenticated } from '@/lib/auth-helpers.server';
 
 export default async function PublisherDashboard() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const { user } = await isAuthenticated();
 
-  if (!session?.user) {
-    redirect('/login');
+  if (!user) {
+    return redirect('/login');
   }
 
   // Verify user has 'publisher' role
-  const roleData = await getUserRole(session.user.id);
+  const roleData = await getUserRole(user.id);
   if (roleData.role !== 'publisher') {
-    redirect('/');
+    return redirect('/');
   }
 
   return (
