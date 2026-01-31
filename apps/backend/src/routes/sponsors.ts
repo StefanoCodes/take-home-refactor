@@ -1,5 +1,7 @@
 import { Router, type Request, type Response, type IRouter } from 'express';
+import { createSponsorInputSchema } from '@anvara/schemas';
 import { prisma } from '../db.js';
+import { validateBody } from '../middleware/validate.js';
 
 const router: IRouter = Router();
 
@@ -53,14 +55,9 @@ router.get('/:id', async (req: Request, res: Response) => {
 });
 
 // POST /api/sponsors - Create new sponsor
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', validateBody(createSponsorInputSchema), async (req: Request, res: Response) => {
   try {
     const { name, email, website, logo, description, industry } = req.body;
-
-    if (!name || !email) {
-      res.status(400).json({ error: 'Name and email are required' });
-      return;
-    }
 
     const sponsor = await prisma.sponsor.create({
       data: { name, email, website, logo, description, industry },

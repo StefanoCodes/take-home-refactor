@@ -1,5 +1,7 @@
 import { Router, type Request, type Response, type IRouter } from 'express';
+import { createPlacementInputSchema } from '@anvara/schemas';
 import { prisma } from '../db.js';
+import { validateBody } from '../middleware/validate.js';
 import { getParam } from '../utils/helpers.js';
 
 const router: IRouter = Router();
@@ -40,7 +42,7 @@ router.get('/', async (req: Request, res: Response) => {
 });
 
 // POST /api/placements - Create new placement
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', validateBody(createPlacementInputSchema), async (req: Request, res: Response) => {
   try {
     const {
       campaignId,
@@ -52,13 +54,6 @@ router.post('/', async (req: Request, res: Response) => {
       startDate,
       endDate,
     } = req.body;
-
-    if (!campaignId || !creativeId || !adSlotId || !publisherId || !agreedPrice) {
-      res.status(400).json({
-        error: 'campaignId, creativeId, adSlotId, publisherId, and agreedPrice are required',
-      });
-      return;
-    }
 
     const placement = await prisma.placement.create({
       data: {

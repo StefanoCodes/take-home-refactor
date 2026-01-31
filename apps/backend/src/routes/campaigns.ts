@@ -1,5 +1,7 @@
 import { Router, type Request, type Response, type IRouter } from 'express';
+import { createCampaignInputSchema } from '@anvara/schemas';
 import { prisma } from '../db.js';
+import { validateBody } from '../middleware/validate.js';
 import { getParam } from '../utils/helpers.js';
 
 const router: IRouter = Router();
@@ -59,7 +61,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 });
 
 // POST /api/campaigns - Create new campaign
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', validateBody(createCampaignInputSchema), async (req: Request, res: Response) => {
   try {
     const {
       name,
@@ -73,13 +75,6 @@ router.post('/', async (req: Request, res: Response) => {
       targetRegions,
       sponsorId,
     } = req.body;
-
-    if (!name || !budget || !startDate || !endDate || !sponsorId) {
-      res.status(400).json({
-        error: 'Name, budget, startDate, endDate, and sponsorId are required',
-      });
-      return;
-    }
 
     const campaign = await prisma.campaign.create({
       data: {
