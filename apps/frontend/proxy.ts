@@ -4,10 +4,12 @@ import { getSessionCookie } from "better-auth/cookies";
 const defaultLoginUrl = "/login";
 
 const authRoutes = [defaultLoginUrl];
+const publicRoutes = ["/"];
 
 export async function proxy(request: NextRequest) {
 	const pathName = request.nextUrl.pathname;
 	const isAuthRoute = authRoutes.includes(pathName);
+	const isPublicRoute = publicRoutes.includes(pathName);
 	// This is the recommended approach to optimistically redirect users
 	// also do the auth check in each page this is just an optimistic redirect NOT secure.
 	const sessionCookie = getSessionCookie(request);
@@ -16,14 +18,11 @@ export async function proxy(request: NextRequest) {
 		if (isAuthRoute) {
 			return NextResponse.next();
 		}
+		if (isPublicRoute) {
+			return NextResponse.next();
+		}
 		return NextResponse.redirect(new URL(defaultLoginUrl, request.url));
 	}
-
-	if (isAuthRoute) {
-		return NextResponse.redirect(new URL("/", request.url));
-	}
-
-	return NextResponse.next();
 }
 
 export const config = {
