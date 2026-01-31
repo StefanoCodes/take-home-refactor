@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
 
   // Transpile workspace packages
-  transpilePackages: ['@anvara/config'],
+  transpilePackages: ['@anvara/config', '@anvara/schemas'],
 };
 
 export default nextConfig;

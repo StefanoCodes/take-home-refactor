@@ -26,6 +26,9 @@ importers:
 
   apps/backend:
     dependencies:
+      '@anvara/schemas':
+        specifier: workspace:*
+        version: link:../../packages/schemas
       '@prisma/adapter-pg':
         specifier: ^7.2.0
         version: 7.2.0
@@ -78,6 +81,15 @@ importers:
 
   apps/frontend:
     dependencies:
+      '@anvara/schemas':
+        specifier: workspace:*
+        version: link:../../packages/schemas
+      '@better-fetch/fetch':
+        specifier: ^1.1.21
+        version: 1.1.21
+      '@better-fetch/logger':
+        specifier: ^1.1.21
+        version: 1.1.21
       '@tailwindcss/postcss':
         specifier: ^4.1.18
         version: 4.1.18
@@ -90,6 +102,9 @@ importers:
       next:
         specifier: ^16.1.3
         version: 16.1.3(@babel/core@7.28.6)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      next-safe-action:
+        specifier: ^8.0.11
+        version: 8.0.11(next@16.1.3(@babel/core@7.28.6)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       pg:
         specifier: ^8.17.1
         version: 8.17.1
@@ -99,6 +114,9 @@ importers:
       react-dom:
         specifier: ^19.2.3
         version: 19.2.3(react@19.2.3)
+      zod:
+        specifier: ^3.25.76
+        version: 3.25.76
     devDependencies:
       '@anvara/config':
         specifier: workspace:*
@@ -183,6 +201,19 @@ importers:
       prettier:
         specifier: ^3.8.0
         version: 3.8.0
+
+  packages/schemas:
+    dependencies:
+      zod:
+        specifier: ^3.25.76
+        version: 3.25.76
+    devDependencies:
+      '@anvara/config':
+        specifier: workspace:*
+        version: link:../config
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
 
 packages:
 
@@ -312,6 +343,9 @@ packages:
 
   '@better-fetch/fetch@1.1.21':
     resolution: {integrity: sha512-/ImESw0sskqlVR94jB+5+Pxjf+xBwDZF/N5+y2/q4EqD7IARUTSpPfIo8uf39SYpCxyOCtbyYpUrZ3F/k0zT4A==}
+
+  '@better-fetch/logger@1.1.21':
+    resolution: {integrity: sha512-E5/sT3kOuQVZbcm89GmxopMzt4rjTNG26pSDPxNEyis69TMyMEYX5BFnm3qopeTPVkehKz8jwCDJoeBlkaXMqg==}
 
   '@chevrotain/cst-dts-gen@10.5.0':
     resolution: {integrity: sha512-lhmC/FyqQ2o7pGK4Om+hzuDrm9rhFYIJ/AXoQBeongmn870Xeb0L6oGEiuR8nohFNL5sMaQEJWCxr1oIVIVXrw==}
@@ -2465,6 +2499,14 @@ packages:
     resolution: {integrity: sha512-8Ofs/AUQh8MaEcrlq5xOX0CQ9ypTF5dl78mjlMNfOK08fzpgTHQRQPBxcPlEtIw0yRpws+Zo/3r+5WRby7u3Gg==}
     engines: {node: '>= 0.6'}
 
+  next-safe-action@8.0.11:
+    resolution: {integrity: sha512-gqJLmnQLAoFCq1kRBopN46New+vx1n9J9Y/qDQLXpv/VqU40AWxDakvshwwnWAt8R0kLvlakNYNLX5PqlXWSMg==}
+    engines: {node: '>=18.17'}
+    peerDependencies:
+      next: '>= 14.0.0'
+      react: '>= 18.2.0'
+      react-dom: '>= 18.2.0'
+
   next@16.1.3:
     resolution: {integrity: sha512-gthG3TRD+E3/mA0uDQb9lqBmx1zVosq5kIwxNN6+MRNd085GzD+9VXMPUs+GGZCbZ+GDZdODUq4Pm7CTXK6ipw==}
     engines: {node: '>=20.9.0'}
@@ -3314,6 +3356,9 @@ packages:
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
 
+  zod@3.25.76:
+    resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
   zod@4.3.5:
     resolution: {integrity: sha512-k7Nwx6vuWx1IJ9Bjuf4Zt1PEllcwe7cls3VNzm4CQ1/hgtFUK2bRNG3rvnpPUhFjmqJKAKtjV576KnUkHocg/g==}
 
@@ -3477,6 +3522,10 @@ snapshots:
   '@better-auth/utils@0.3.0': {}
 
   '@better-fetch/fetch@1.1.21': {}
+
+  '@better-fetch/logger@1.1.21':
+    dependencies:
+      consola: 3.4.2
 
   '@chevrotain/cst-dts-gen@10.5.0':
     dependencies:
@@ -4921,8 +4970,8 @@ snapshots:
       '@babel/parser': 7.28.6
       eslint: 9.39.2(jiti@2.6.1)
       hermes-parser: 0.25.1
-      zod: 4.3.5
-      zod-validation-error: 4.0.2(zod@4.3.5)
+      zod: 3.25.76
+      zod-validation-error: 4.0.2(zod@3.25.76)
     transitivePeerDependencies:
       - supports-color
 
@@ -5633,6 +5682,12 @@ snapshots:
   natural-compare@1.4.0: {}
 
   negotiator@1.0.0: {}
+
+  next-safe-action@8.0.11(next@16.1.3(@babel/core@7.28.6)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+    dependencies:
+      next: 16.1.3(@babel/core@7.28.6)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
 
   next@16.1.3(@babel/core@7.28.6)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
@@ -6596,8 +6651,10 @@ snapshots:
     dependencies:
       grammex: 3.1.12
 
-  zod-validation-error@4.0.2(zod@4.3.5):
+  zod-validation-error@4.0.2(zod@3.25.76):
     dependencies:
-      zod: 4.3.5
+      zod: 3.25.76
+
+  zod@3.25.76: {}
 
   zod@4.3.5: {}
