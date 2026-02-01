@@ -3,6 +3,7 @@ import { isAuthenticated } from '@/lib/auth-helpers.server';
 import { getUserRole } from '@/lib/data-access/auth/get-user-role';
 import { NavLinks } from './nav-links';
 import { NavAuthUser } from './nav-auth-user';
+import { Logo } from '@/components/global/logo';
 
 export async function Nav() {
   const { isLoggedIn, user } = await isAuthenticated();
@@ -17,9 +18,7 @@ export async function Nav() {
   return (
     <header className="border-b border-[--color-border]">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4">
-        <Link href="/" className="text-xl font-bold text-[--color-primary]">
-          Anvara
-        </Link>
+        <Logo />
 
         <div className="flex items-center gap-6">
           <NavLinks role={role} />

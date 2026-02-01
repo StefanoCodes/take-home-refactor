@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { logoutAction } from '@/lib/server-actions/auth/logout';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -23,14 +24,14 @@ export function LogoutButton() {
 
   return (
     <form action={formAction}>
-      <button
+      <Button
         type="submit"
         disabled={isPending}
         className="rounded bg-gray-600 px-3 py-1.5 text-sm text-white hover:bg-gray-500 disabled:opacity-50"
       >
         {isPending && <Loader2 className="mr-1 inline size-3.5 animate-spin" />}
         {isPending ? 'Logging out...' : 'Logout'}
-      </button>
+      </Button>
     </form>
   );
 }

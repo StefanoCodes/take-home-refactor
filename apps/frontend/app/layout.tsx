@@ -2,23 +2,41 @@ import type { Metadata } from 'next';
 import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
 import { Nav } from '@/components/layout/navbar/nav';
+import localFont from 'next/font/local';
+import { GoogleTagManager } from '@next/third-parties/google';
 
-// TODO: Add ErrorBoundary wrapper for graceful error handling
-// TODO: Consider adding a loading.tsx for Suspense boundaries
-// TODO: Add Open Graph metadata for social media sharing
-// TODO: Add Twitter Card metadata
-// TODO: Consider adding favicon and app icons
+const neueHaas = localFont({
+  src: '../public/fonts/NHaasGroteskDSStd-55Rg.otf',
+  variable: '--font-neue-haas',
+  weight: '400',
+});
 
 export const metadata: Metadata = {
   title: 'Anvara Marketplace',
   description: 'Sponsorship marketplace connecting sponsors with publishers',
-  // Missing: openGraph, twitter, icons, viewport, etc.
+  openGraph: {
+    type: 'website',
+    title: 'Anvara Marketplace',
+    description: 'Sponsorship marketplace connecting sponsors with publishers',
+    images: [
+      {
+        url: 'https://framerusercontent.com/assets/gdGdP54HWW02IP0vYlZ9RpJTU.png',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Anvara Marketplace',
+    description: 'Sponsorship marketplace connecting sponsors with publishers',
+    images: ['https://framerusercontent.com/assets/gdGdP54HWW02IP0vYlZ9RpJTU.png'],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-dvh antialiased">
+      <GoogleTagManager gtmId="G-NWHC9C48N5" />
+      <body className={`min-h-dvh antialiased ${neueHaas.variable}`}>
         <Nav />
         {children}
         <Toaster richColors position="top-center" />
