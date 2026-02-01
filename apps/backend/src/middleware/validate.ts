@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import type { ZodSchema } from "zod";
+import { sendError } from "../utils/helpers.js";
 
 /**
  * Express middleware that validates `req.body` against a Zod schema (same zod schema the frontend used to send the body single source of truth).
@@ -11,10 +12,7 @@ export function validateBody(schema: ZodSchema) {
 
 		if (!result.success) {
 			const errors = result.error.flatten().fieldErrors;
-			res.status(400).json({
-				error: "Validation failed",
-				details: errors,
-			});
+			sendError(res, 400, "Validation failed");
 			return;
 		}
 

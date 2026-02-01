@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
+import { nextCookies } from "better-auth/next-js";
 import { Pool } from "pg";
-import type { Request } from "express";
 
 /**
  * Better Auth instance for session validation.
@@ -12,5 +12,6 @@ export const auth = betterAuth({
 	emailAndPassword: {
 		enabled: true,
 	},
+	plugins: [nextCookies()],
 	trustedOrigins: [process.env.BETTER_AUTH_URL!],
 });

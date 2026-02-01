@@ -1,4 +1,4 @@
-import { getPublisherAdSlots } from '@/lib/data-access/ad-slots/get-publisher-ad-slots';
+import { getPublisherAdSlots } from '@/lib/data-access-layer/ad-slots/get-publisher-ad-slots';
 import { AdSlotCard } from './ad-slot-card';
 
 export async function AdSlotGrid({ publisherId }: { publisherId: string }) {

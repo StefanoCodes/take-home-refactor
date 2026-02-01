@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { isAuthenticated } from '@/lib/auth-helpers.server';
-import { getUserRole } from '@/lib/data-access/auth/get-user-role';
+import { getUserRole } from '@/lib/data-access-layer/auth/get-user-role';
 import { LogoutButton } from './logout-button';
 import { Button } from '@/components/ui/button';
 

@@ -14,8 +14,8 @@ export default async function MarketplacePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Marketplace</h1>
-        <p className="text-[--color-muted]">Browse available ad slots from our publishers</p>
+        <h1 className="text-2xl font-bold tracking-tight text-white/90">Marketplace</h1>
+        <p className="mt-1 text-white/40">Browse available ad slots from our publishers</p>
       </div>
 
       <Suspense fallback={<AdSlotGridSkeleton />}>

@@ -10,8 +10,15 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { bookAdSlotAction } from '@/lib/server-actions/ad-slots/book-ad-slot';
-import { bookAdSlotSchema, type BookAdSlotSchemaType } from '@/lib/validations/ad-slots';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { bookAdSlotInputSchema } from '@anvara/schemas';
+import { z } from 'zod';
+
+export const bookAdSlotSchema = bookAdSlotInputSchema.extend({
+  adSlotId: z.string().min(1),
+});
+
+export type BookAdSlotSchemaType = z.infer<typeof bookAdSlotSchema>;
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';

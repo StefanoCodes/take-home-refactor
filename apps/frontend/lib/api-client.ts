@@ -1,4 +1,4 @@
-import { createFetch, createSchema } from "@better-fetch/fetch";
+import { createFetch, createSchema, ErrorContext } from "@better-fetch/fetch";
 import { logger as betterFetchLogger } from "@better-fetch/logger";
 
 // Common
@@ -26,6 +26,7 @@ import {
 	createCampaignInputSchema,
 	createCampaignOutputSchema,
 } from "@anvara/schemas";
+import { updateCampaignInputSchema } from "@anvara/schemas";
 
 // Ad Slots
 import {
@@ -37,6 +38,7 @@ import {
 	createAdSlotInputSchema,
 	createAdSlotOutputSchema,
 } from "@anvara/schemas";
+import { updateAdSlotInputSchema } from "@anvara/schemas";
 import { bookAdSlotInputSchema, bookAdSlotOutputSchema } from "@anvara/schemas";
 import { unbookAdSlotOutputSchema } from "@anvara/schemas";
 
@@ -59,11 +61,30 @@ import { getHealthOutputSchema } from "@anvara/schemas";
 // Auth
 import { getMeOutputSchema } from "@anvara/schemas";
 import { getUserRoleOutputSchema } from "@anvara/schemas";
+import { cookies } from "next/headers";
+import { Logger } from "./logger";
 
 export const $fetch = createFetch({
 	baseURL: process.env.NEXT_PUBLIC_API_URL,
 	credentials: "include",
 	disableValidation: process.env.NODE_ENV !== "development",
+	onRequest: async (context) => {
+		if (typeof window === "undefined") {
+			try {
+				const cookieStore = await cookies();
+				const cookieHeader = cookieStore
+					.getAll()
+					.map((c) => `${c.name}=${c.value}`)
+					.join("; ");
+				if (cookieHeader) {
+					context.headers.set("Cookie", cookieHeader);
+				}
+			} catch {
+				// cookies() throws outside of a request context (e.g. during build)
+			}
+		}
+		return context;
+	},
 	retry: {
 		type: "linear",
 		attempts: 3,
@@ -77,6 +98,12 @@ export const $fetch = createFetch({
 				response.status === 408
 			);
 		},
+	},
+	onError: (context: ErrorContext) => {
+		Logger.error(context.error.error, {
+			status: context.error.status,
+			statusText: context.error.statusText,
+		});
 	},
 	defaultError: errorResponseSchema,
 	schema: createSchema({
@@ -126,6 +153,11 @@ export const $fetch = createFetch({
 			input: createCampaignInputSchema,
 			output: createCampaignOutputSchema,
 		},
+		"@put/api/campaigns/:id": {
+			input: updateCampaignInputSchema,
+			output: createCampaignOutputSchema,
+		},
+		"@delete/api/campaigns/:id": {},
 
 		// Ad Slots
 		"@get/api/ad-slots": {
@@ -139,6 +171,11 @@ export const $fetch = createFetch({
 			input: createAdSlotInputSchema,
 			output: createAdSlotOutputSchema,
 		},
+		"@put/api/ad-slots/:id": {
+			input: updateAdSlotInputSchema,
+			output: createAdSlotOutputSchema,
+		},
+		"@delete/api/ad-slots/:id": {},
 		"@post/api/ad-slots/:id/book": {
 			input: bookAdSlotInputSchema,
 			output: bookAdSlotOutputSchema,

@@ -2,14 +2,25 @@ import { Router, type Request, type Response, type IRouter } from 'express';
 import { createPlacementInputSchema } from '@anvara/schemas';
 import { prisma } from '../db.js';
 import { validateBody } from '../middleware/validate.js';
-import { getParam } from '../utils/helpers.js';
+import { requireAuth, type AuthRequest } from '../middleware/authenticate.js';
+import { getOwnedSponsor, getOwnedPublisher } from '../middleware/authorize.js';
+import { getParam, sendError } from '../utils/helpers.js';
 
 const router: IRouter = Router();
 
-// GET /api/placements - List placements
+// All placement routes require authentication
+router.use(requireAuth);
+
+// GET /api/placements - List placements scoped to the authenticated user
 router.get('/', async (req: Request, res: Response) => {
   try {
+    const { user } = req as AuthRequest;
     const { campaignId, publisherId, status } = req.query;
+
+    const [sponsor, publisher] = await Promise.all([
+      getOwnedSponsor(user.id),
+      getOwnedPublisher(user.id),
+    ]);
 
     const placements = await prisma.placement.findMany({
       where: {
@@ -24,6 +35,10 @@ router.get('/', async (req: Request, res: Response) => {
             | 'PAUSED'
             | 'COMPLETED',
         }),
+        OR: [
+          ...(sponsor ? [{ campaign: { sponsorId: sponsor.id } }] : []),
+          ...(publisher ? [{ publisherId: publisher.id }] : []),
+        ],
       },
       include: {
         campaign: { select: { id: true, name: true } },
@@ -37,13 +52,14 @@ router.get('/', async (req: Request, res: Response) => {
     res.json(placements);
   } catch (error) {
     console.error('Error fetching placements:', error);
-    res.status(500).json({ error: 'Failed to fetch placements' });
+    sendError(res, 500, 'Failed to fetch placements');
   }
 });
 
-// POST /api/placements - Create new placement
+// POST /api/placements - Create new placement (verify ownership of the campaign)
 router.post('/', validateBody(createPlacementInputSchema), async (req: Request, res: Response) => {
   try {
+    const { user } = req as AuthRequest;
     const {
       campaignId,
       creativeId,
@@ -54,6 +70,21 @@ router.post('/', validateBody(createPlacementInputSchema), async (req: Request, 
       startDate,
       endDate,
     } = req.body;
+
+    const campaign = await prisma.campaign.findUnique({
+      where: { id: campaignId },
+      include: { sponsor: { select: { userId: true } } },
+    });
+
+    if (!campaign) {
+      sendError(res, 404, 'Campaign not found');
+      return;
+    }
+
+    if (campaign.sponsor.userId !== user.id) {
+      sendError(res, 403, 'Forbidden');
+      return;
+    }
 
     const placement = await prisma.placement.create({
       data: {
@@ -75,7 +106,7 @@ router.post('/', validateBody(createPlacementInputSchema), async (req: Request, 
     res.status(201).json(placement);
   } catch (error) {
     console.error('Error creating placement:', error);
-    res.status(500).json({ error: 'Failed to create placement' });
+    sendError(res, 500, 'Failed to create placement');
   }
 });
 

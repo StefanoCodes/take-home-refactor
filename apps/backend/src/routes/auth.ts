@@ -1,29 +1,31 @@
 import { Router, type Request, type Response, type IRouter } from "express";
-import type { AuthRequest } from "../middleware/authenticate.js";
-import { authenticate } from "../middleware/authenticate.js";
+import { requireAuth, type AuthRequest } from "../middleware/authenticate.js";
 import { prisma } from "../db.js";
-import { getParam } from "../utils/helpers.js";
+import { getParam, sendError } from "../utils/helpers.js";
 
 const router: IRouter = Router();
 
 // POST /api/auth/login - Placeholder (Better Auth handles login via frontend)
 router.post("/login", async (_req: Request, res: Response) => {
-	res.status(400).json({
-		error: "Use the frontend login at /login instead",
-		hint: "Better Auth handles authentication via the Next.js frontend",
-	});
+	sendError(res, 400, "Use the frontend login at /login instead");
 });
 
 // GET /api/auth/me - Get current authenticated user
-router.get("/me", authenticate, async (req: Request, res: Response) => {
+router.get("/me", requireAuth, async (req: Request, res: Response) => {
 	const { user } = req as AuthRequest;
 	res.json({ user });
 });
 
 // GET /api/auth/role/:userId - Get user role based on Sponsor/Publisher records
-router.get("/role/:userId", async (req: Request, res: Response) => {
+router.get("/role/:userId", requireAuth, async (req: Request, res: Response) => {
 	try {
+		const { user } = req as AuthRequest;
 		const userId = getParam(req.params.userId);
+
+		if (user.id !== userId) {
+			sendError(res, 403, "Forbidden");
+			return;
+		}
 
 		// Check if user is a sponsor
 		const sponsor = await prisma.sponsor.findUnique({
@@ -54,7 +56,7 @@ router.get("/role/:userId", async (req: Request, res: Response) => {
 		res.json({ role: null });
 	} catch (error) {
 		console.error("Error fetching user role:", error);
-		res.status(500).json({ error: "Failed to fetch user role" });
+		sendError(res, 500, "Failed to fetch user role");
 	}
 });
 

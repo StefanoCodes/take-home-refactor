@@ -64,6 +64,8 @@ export const paymentStatusSchema = z.enum([
 
 export const errorResponseSchema = z.object({
   error: z.string(),
+  status: z.number(),
+  statusText: z.string(),
 });
 
 export const successResponseSchema = z.object({

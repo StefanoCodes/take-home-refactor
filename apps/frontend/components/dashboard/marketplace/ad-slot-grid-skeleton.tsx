@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 
 export function AdSlotGridSkeleton() {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {Array.from({ length: 6 }).map((_, i) => (
         <Card key={`ad-slot-grid-skeleton-${i}`}>
           <div className="mb-2 flex items-start justify-between">

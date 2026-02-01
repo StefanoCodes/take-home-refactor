@@ -11,7 +11,6 @@ app.use(
 	cors({
 		origin: process.env.BETTER_AUTH_URL!,
 		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-		allowedHeaders: ["Content-Type", "Authorization"],
 		credentials: true,
 	}),
 );
@@ -22,7 +21,11 @@ const globalLimiter = rateLimit({
 	limit: 100,
 	standardHeaders: "draft-8",
 	legacyHeaders: false,
-	message: { error: "Too many requests, please try again later." },
+	message: {
+		error: "Too many requests, please try again later.",
+		status: 429,
+		statusText: "Too Many Requests",
+	},
 });
 
 const authLimiter = rateLimit({
@@ -30,11 +33,17 @@ const authLimiter = rateLimit({
 	limit: 20,
 	standardHeaders: "draft-8",
 	legacyHeaders: false,
-	message: { error: "Too many authentication attempts, please try again later." },
+	message: {
+		error: "Too many authentication attempts, please try again later.",
+		status: 429,
+		statusText: "Too Many Requests",
+	},
 });
 
-app.use("/api", globalLimiter);
-app.use("/api/auth", authLimiter);
+if (process.env.NODE_ENV === "production") {
+	app.use("/api", globalLimiter);
+	app.use("/api/auth", authLimiter);
+}
 
 // Mount all API routes
 app.use("/api", routes);

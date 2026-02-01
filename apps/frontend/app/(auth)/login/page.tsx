@@ -1,7 +1,7 @@
 import { isAuthenticated } from '@/lib/auth-helpers.server';
 import { redirect } from 'next/navigation';
 import { LoginForm } from '@/components/auth/login-form';
-import { getUserRole } from '@/lib/data-access/auth/get-user-role';
+import { getUserRole } from '@/lib/data-access-layer/auth/get-user-role';
 
 export default async function LoginPage() {
   const { user } = await isAuthenticated();

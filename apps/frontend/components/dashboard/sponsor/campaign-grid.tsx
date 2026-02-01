@@ -1,4 +1,4 @@
-import { getCampaigns } from '@/lib/data-access/campaigns/get-campaigns';
+import { getCampaigns } from '@/lib/data-access-layer/campaigns/get-campaigns';
 import {
   CampaignCard,
   CampaignCardHeader,

@@ -1,13 +1,15 @@
 import Link from 'next/link';
 import { isAuthenticated } from '@/lib/auth-helpers.server';
-import { getUserRole } from '@/lib/data-access/auth/get-user-role';
+import { getUserRole } from '@/lib/data-access-layer/auth/get-user-role';
 import { NavLinks } from './nav-links';
 import { NavAuthUser } from './nav-auth-user';
 import { Logo } from '@/components/global/logo';
+import { getUser } from '@/lib/data-access-layer/auth/get-user';
 
 export async function Nav() {
   const { isLoggedIn, user } = await isAuthenticated();
-
+  const userData = await getUser();
+  console.log(userData);
   let role: 'sponsor' | 'publisher' | null = null;
 
   if (isLoggedIn && user) {

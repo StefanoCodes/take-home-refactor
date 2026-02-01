@@ -1,4 +1,19 @@
+import type { Response } from "express";
+import { STATUS_CODES } from "http";
+
 // Utility helpers for the API
+
+/**
+ * Send a standardized error response: { error, status, statusText }
+ * Matches the `errorResponseSchema` in @anvara/schemas.
+ */
+export function sendError(res: Response, status: number, error: string) {
+	res.status(status).json({
+		error,
+		status,
+		statusText: STATUS_CODES[status] ?? "Unknown Error",
+	});
+}
 
 // Helper to safely extract route/query params
 export function getParam(param: unknown): string {

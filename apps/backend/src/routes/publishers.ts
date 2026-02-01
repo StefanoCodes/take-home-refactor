@@ -1,13 +1,20 @@
 import { Router, type Request, type Response, type IRouter } from 'express';
 import { prisma } from '../db.js';
-import { getParam } from '../utils/helpers.js';
+import { requireAuth, type AuthRequest } from '../middleware/authenticate.js';
+import { getParam, sendError } from '../utils/helpers.js';
 
 const router: IRouter = Router();
 
-// GET /api/publishers - List all publishers
-router.get('/', async (_req: Request, res: Response) => {
+// All publisher routes require authentication
+router.use(requireAuth);
+
+// GET /api/publishers - List publishers (only the authenticated user's publisher)
+router.get('/', async (req: Request, res: Response) => {
   try {
+    const { user } = req as AuthRequest;
+
     const publishers = await prisma.publisher.findMany({
+      where: { userId: user.id },
       include: {
         _count: {
           select: { adSlots: true, placements: true },
@@ -18,14 +25,16 @@ router.get('/', async (_req: Request, res: Response) => {
     res.json(publishers);
   } catch (error) {
     console.error('Error fetching publishers:', error);
-    res.status(500).json({ error: 'Failed to fetch publishers' });
+    sendError(res, 500, 'Failed to fetch publishers');
   }
 });
 
-// GET /api/publishers/:id - Get single publisher with ad slots
+// GET /api/publishers/:id - Get single publisher (verify ownership)
 router.get('/:id', async (req: Request, res: Response) => {
   try {
+    const { user } = req as AuthRequest;
     const id = getParam(req.params.id);
+
     const publisher = await prisma.publisher.findUnique({
       where: { id },
       include: {
@@ -41,14 +50,19 @@ router.get('/:id', async (req: Request, res: Response) => {
     });
 
     if (!publisher) {
-      res.status(404).json({ error: 'Publisher not found' });
+      sendError(res, 404, 'Publisher not found');
+      return;
+    }
+
+    if (publisher.userId !== user.id) {
+      sendError(res, 403, 'Forbidden');
       return;
     }
 
     res.json(publisher);
   } catch (error) {
     console.error('Error fetching publisher:', error);
-    res.status(500).json({ error: 'Failed to fetch publisher' });
+    sendError(res, 500, 'Failed to fetch publisher');
   }
 });
 

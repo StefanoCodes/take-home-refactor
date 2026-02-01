@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { AdSlotGrid } from '@/components/dashboard/publisher/ad-slot-grid';
 import { AdSlotGridSkeleton } from '@/components/dashboard/publisher/ad-slot-grid-skeleton';
 import { isAuthenticated } from '@/lib/auth-helpers.server';
-import { getUserRole } from '@/lib/data-access/auth/get-user-role';
+import { getUserRole } from '@/lib/data-access-layer/auth/get-user-role';
 import { redirect } from 'next/navigation';
 
 export default async function PublisherDashboard() {

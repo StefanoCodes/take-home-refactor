@@ -2,9 +2,9 @@
 
 import { auth } from "@/lib/auth.server";
 import { actionClient, ActionError } from "@/lib/action-client";
-import { getUserRole } from "@/lib/data-access/auth/get-user-role";
-import { loginSchema } from "@/lib/validations/auth";
-import { headers, cookies } from "next/headers";
+import { getUserRole } from "@/lib/data-access-layer/auth/get-user-role";
+import { loginSchema } from "@/components/auth/login-form";
+import { headers } from "next/headers";
 
 const CREDENTIALS = {
 	sponsor: { email: "sponsor@example.com", password: "password" },

@@ -55,6 +55,7 @@ export const actionClient = createSafeActionClient({
 // (protected) authentication action, this ensures that the business logic ran has the user authenticated and we pass the user context to the next function.
 export const authActionClient = actionClient.use(async ({ next }) => {
 	const { isLoggedIn, session, user } = await isAuthenticated();
+
 	if (!isLoggedIn) throw new Error("Unauthorized");
 
 	return next({

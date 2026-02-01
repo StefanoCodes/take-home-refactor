@@ -1,7 +1,12 @@
 import { Router, type Request, type Response, type IRouter } from 'express';
 import { prisma } from '../db.js';
+import { requireAuth } from '../middleware/authenticate.js';
+import { sendError } from '../utils/helpers.js';
 
 const router: IRouter = Router();
+
+// All dashboard routes require authentication
+router.use(requireAuth);
 
 // GET /api/dashboard/stats - Get overall platform stats
 router.get('/stats', async (_req: Request, res: Response) => {
@@ -40,7 +45,7 @@ router.get('/stats', async (_req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error fetching dashboard stats:', error);
-    res.status(500).json({ error: 'Failed to fetch dashboard stats' });
+    sendError(res, 500, 'Failed to fetch dashboard stats');
   }
 });
 
