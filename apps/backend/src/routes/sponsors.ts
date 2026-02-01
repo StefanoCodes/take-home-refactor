@@ -1,5 +1,8 @@
 import { Router, type Request, type Response, type IRouter } from "express";
-import { createSponsorInputSchema } from "@anvara/schemas";
+import {
+	createSponsorInputSchema,
+	updateSponsorInputSchema,
+} from "@anvara/schemas";
 import { prisma } from "../db.js";
 import { validateBody } from "../middleware/validate.js";
 import { requireAuth, type AuthRequest } from "../middleware/authenticate.js";
@@ -31,7 +34,7 @@ router.get("/", async (req: Request, res: Response) => {
 	}
 });
 
-// GET /api/sponsors/:id - Get single sponsor (verify ownership)
+// GET /api/sponsors/:id - Get single sponsor
 router.get("/:id", async (req: Request, res: Response) => {
 	try {
 		const { user } = req as AuthRequest;
@@ -97,7 +100,40 @@ router.post(
 	},
 );
 
-// TODO: Add PUT /api/sponsors/:id endpoint
-// Update sponsor details
+// PUT /api/sponsors/:id - Update sponsor
+router.put(
+	"/:id",
+	validateBody(updateSponsorInputSchema),
+	async (req: Request, res: Response) => {
+		try {
+			const { user } = req as AuthRequest;
+			const id = getParam(req.params.id);
+
+			const sponsor = await prisma.sponsor.findUnique({
+				where: { id },
+			});
+
+			if (!sponsor) {
+				sendError(res, 404, "Sponsor not found");
+				return;
+			}
+
+			if (sponsor.userId !== user.id) {
+				sendError(res, 403, "Forbidden");
+				return;
+			}
+
+			const updated = await prisma.sponsor.update({
+				where: { id },
+				data: req.body,
+			});
+
+			res.json(updated);
+		} catch (error) {
+			console.error("Error updating sponsor:", error);
+			sendError(res, 500, "Failed to update sponsor");
+		}
+	},
+);
 
 export default router;
