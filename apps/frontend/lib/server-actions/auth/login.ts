@@ -2,7 +2,6 @@
 
 import { auth } from "@/lib/auth.server";
 import { actionClient, ActionError } from "@/lib/action-client";
-import { getUserRole } from "@/lib/data-access-layer/auth/get-user-role";
 import { loginSchema } from "@/lib/validations/auth";
 import { headers } from "next/headers";
 
@@ -39,14 +38,8 @@ export const loginAction = actionClient
 				throw new ActionError("Login succeeded but no user ID returned");
 			}
 
-			const roleData = await getUserRole(userId);
-
-			let redirectTo = "/";
-			if (roleData.role === "sponsor") {
-				redirectTo = "/dashboard/sponsor";
-			} else if (roleData.role === "publisher") {
-				redirectTo = "/dashboard/publisher";
-			}
+			const redirectTo =
+				role === "sponsor" ? "/dashboard/sponsor" : "/dashboard/publisher";
 
 			return {
 				success: true,
