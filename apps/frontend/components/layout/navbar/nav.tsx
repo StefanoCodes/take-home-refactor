@@ -4,12 +4,9 @@ import { getUserRole } from '@/lib/data-access-layer/auth/get-user-role';
 import { NavLinks } from './nav-links';
 import { NavAuthUser } from './nav-auth-user';
 import { Logo } from '@/components/global/logo';
-import { getUser } from '@/lib/data-access-layer/auth/get-user';
 
 export async function Nav() {
   const { isLoggedIn, user } = await isAuthenticated();
-  const userData = await getUser();
-  console.log(userData);
   let role: 'sponsor' | 'publisher' | null = null;
 
   if (isLoggedIn && user) {
@@ -18,7 +15,7 @@ export async function Nav() {
   }
 
   return (
-    <header className="border-b border-white/[0.08]">
+    <header className="border-b fixed top-0 left-0 right-0 z-50 border-white/[0.08] bg-background">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4">
         <Logo />
 
