@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import { CreateAdSlotButton } from '@/components/dashboard/publisher/actions/create-ad-slot-button';
 import { AdSlotGrid } from '@/components/dashboard/publisher/ad-slot-grid';
 import { AdSlotGridSkeleton } from '@/components/dashboard/publisher/ad-slot-grid-skeleton';
 import { isAuthenticated } from '@/lib/auth-helpers.server';
@@ -18,15 +19,17 @@ export default async function PublisherDashboard() {
     return redirect('/');
   }
 
+  const { publisherId } = roleData;
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">My Ad Slots</h1>
-        {/* TODO: Add CreateAdSlotButton here */}
+        <CreateAdSlotButton publisherId={publisherId} />
       </div>
 
       <Suspense fallback={<AdSlotGridSkeleton />}>
-        <AdSlotGrid publisherId={roleData.publisherId} />
+        <AdSlotGrid publisherId={publisherId} />
       </Suspense>
     </div>
   );

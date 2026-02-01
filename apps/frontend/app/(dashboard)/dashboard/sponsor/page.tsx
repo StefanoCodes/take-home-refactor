@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import { CreateCampaignButton } from '@/components/dashboard/sponsor/actions/create-campaign-button';
 import { CampaignGrid } from '@/components/dashboard/sponsor/campaign-grid';
 import { CampaignGridSkeleton } from '@/components/dashboard/sponsor/campaign-grid-skeleton';
 import { isAuthenticated } from '@/lib/auth-helpers.server';
@@ -22,7 +23,7 @@ export default async function SponsorDashboard() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">My Campaigns</h1>
-        {/* TODO: Add CreateCampaignButton here */}
+        <CreateCampaignButton sponsorId={roleData.sponsorId} />
       </div>
 
       <Suspense fallback={<CampaignGridSkeleton />}>

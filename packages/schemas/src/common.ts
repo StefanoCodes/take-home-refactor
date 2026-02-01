@@ -1,61 +1,71 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 /**
  * Enums (mirroring Prisma enums)
  */
 
 export const subscriptionTierSchema = z.enum([
-  'FREE',
-  'STARTER',
-  'PROFESSIONAL',
-  'ENTERPRISE',
+	"FREE",
+	"STARTER",
+	"PROFESSIONAL",
+	"ENTERPRISE",
 ]);
 
 export const campaignStatusSchema = z.enum([
-  'DRAFT',
-  'PENDING_REVIEW',
-  'APPROVED',
-  'ACTIVE',
-  'PAUSED',
-  'COMPLETED',
-  'CANCELLED',
+	"DRAFT",
+	"PENDING_REVIEW",
+	"APPROVED",
+	"ACTIVE",
+	"PAUSED",
+	"COMPLETED",
+	"CANCELLED",
 ]);
 
 export const creativeTypeSchema = z.enum([
-  'BANNER',
-  'VIDEO',
-  'NATIVE',
-  'SPONSORED_POST',
-  'PODCAST_READ',
+	"BANNER",
+	"VIDEO",
+	"NATIVE",
+	"SPONSORED_POST",
+	"PODCAST_READ",
 ]);
 
 export const adSlotTypeSchema = z.enum([
-  'DISPLAY',
-  'VIDEO',
-  'NATIVE',
-  'NEWSLETTER',
-  'PODCAST',
+	"DISPLAY",
+	"VIDEO",
+	"NATIVE",
+	"NEWSLETTER",
+	"PODCAST",
 ]);
 
-export const pricingModelSchema = z.enum(['CPM', 'CPC', 'CPA', 'FLAT_RATE']);
+/** Values for campaign status (use in selects, filters). */
+export const campaignStatusValues = campaignStatusSchema.options;
+
+/** Values for ad slot type (use in selects, filters). */
+export const adSlotTypeValues = adSlotTypeSchema.options;
+
+export const pricingModelSchema = z.enum(["CPM", "CPC", "CPA", "FLAT_RATE"]);
 
 export const placementStatusSchema = z.enum([
-  'PENDING',
-  'APPROVED',
-  'ACTIVE',
-  'PAUSED',
-  'COMPLETED',
-  'REJECTED',
+	"PENDING",
+	"APPROVED",
+	"ACTIVE",
+	"PAUSED",
+	"COMPLETED",
+	"REJECTED",
 ]);
 
-export const paymentTypeSchema = z.enum(['SUBSCRIPTION', 'CAMPAIGN_FUNDING', 'REFUND']);
+export const paymentTypeSchema = z.enum([
+	"SUBSCRIPTION",
+	"CAMPAIGN_FUNDING",
+	"REFUND",
+]);
 
 export const paymentStatusSchema = z.enum([
-  'PENDING',
-  'PROCESSING',
-  'COMPLETED',
-  'FAILED',
-  'REFUNDED',
+	"PENDING",
+	"PROCESSING",
+	"COMPLETED",
+	"FAILED",
+	"REFUNDED",
 ]);
 
 /**
@@ -63,13 +73,13 @@ export const paymentStatusSchema = z.enum([
  */
 
 export const errorResponseSchema = z.object({
-  error: z.string(),
-  status: z.number(),
-  statusText: z.string(),
+	error: z.string(),
+	status: z.number(),
+	statusText: z.string(),
 });
 
 export const successResponseSchema = z.object({
-  success: z.literal(true),
+	success: z.literal(true),
 });
 
 /**

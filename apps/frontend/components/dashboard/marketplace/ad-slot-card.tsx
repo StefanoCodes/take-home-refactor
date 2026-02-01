@@ -1,6 +1,6 @@
 import type { AdSlotType } from '@anvara/schemas';
 import type React from 'react';
-import { cn } from '@/lib/utils';
+import { adSlotTypeColors, cn } from '@/lib/utils';
 import { Card, CardHeader, CardFooter } from '@/components/ui/card';
 
 interface AdSlotCardRootProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -12,7 +12,7 @@ export function AdSlotCardRoot({ children, className, ...props }: AdSlotCardRoot
     <Card
       className={cn(
         'group/card transition-all duration-200 ease-out hover:border-white/[0.12] hover:bg-gradient-to-b hover:from-white/[0.08] hover:to-white/[0.03] hover:-translate-y-0.5',
-        className,
+        className
       )}
       {...props}
     >
@@ -33,14 +33,6 @@ export function AdSlotCardHeader({ children, className, ...props }: AdSlotCardHe
   );
 }
 
-const typeColors: Record<AdSlotType, string> = {
-  DISPLAY: 'bg-blue-400/10 text-blue-300 ring-1 ring-blue-400/20',
-  VIDEO: 'bg-rose-400/10 text-rose-300 ring-1 ring-rose-400/20',
-  NATIVE: 'bg-emerald-400/10 text-emerald-300 ring-1 ring-emerald-400/20',
-  NEWSLETTER: 'bg-violet-400/10 text-violet-300 ring-1 ring-violet-400/20',
-  PODCAST: 'bg-amber-400/10 text-amber-300 ring-1 ring-amber-400/20',
-};
-
 interface AdSlotCardTypeBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   type: AdSlotType;
 }
@@ -48,7 +40,11 @@ interface AdSlotCardTypeBadgeProps extends React.HTMLAttributes<HTMLSpanElement>
 export function AdSlotCardTypeBadge({ type, className, ...props }: AdSlotCardTypeBadgeProps) {
   return (
     <span
-      className={cn('rounded-full px-2.5 py-0.5 text-[11px] font-medium tracking-wide uppercase', typeColors[type] || 'bg-white/10 text-text-muted', className)}
+      className={cn(
+        'rounded-full px-2.5 py-0.5 text-[11px] font-medium tracking-wide uppercase',
+        adSlotTypeColors[type] ?? 'bg-white/10 text-text-muted',
+        className
+      )}
       {...props}
     >
       {type}

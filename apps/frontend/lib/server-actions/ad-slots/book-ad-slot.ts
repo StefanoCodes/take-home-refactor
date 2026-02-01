@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { authActionClient, ActionError } from "@/lib/action-client";
 import { $fetch } from "@/lib/api-client";
 import { bookAdSlotSchema } from "@/lib/validations/ad-slots";
@@ -25,6 +26,7 @@ export const bookAdSlotAction = authActionClient
 			throw new ActionError(error.error ?? "Failed to book placement");
 		}
 
+		revalidatePath("/dashboard/marketplace");
 		return {
 			success: true,
 			message: data.message,

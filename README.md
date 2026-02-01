@@ -4,8 +4,6 @@
 
 # Anvara Take-Home Test
 
----
-
 ## Architecture & Design Decisions
 
 ### Single Source of Truth: The `@anvara/schemas` Package
@@ -66,18 +64,6 @@ export const $fetch = createFetch({
 
 Every `$fetch` call is fully typed end-to-end. Writing `$fetch("@get/api/campaigns")` returns `{ data: ListCampaignsOutput | null, error: ErrorResponse | null }` -- autocomplete, type checking, and in development mode, **runtime validation** of the response body against the Zod schema. If the backend returns an unexpected shape, you get an immediate error instead of a silent data mismatch propagating through the UI.
 
-The client also handles **server-side cookie forwarding**. When `$fetch` runs on the Next.js server (in a Server Component or server action), it reads cookies from the incoming request via `next/headers` and forwards them to the Express backend, keeping the session alive across the SSR boundary:
-
-```ts
-onRequest: async (context) => {
-  if (typeof window === "undefined") {
-    const cookieStore = await cookies();
-    const cookieHeader = cookieStore.getAll().map((c) => `${c.name}=${c.value}`).join("; ");
-    if (cookieHeader) context.headers.set("Cookie", cookieHeader);
-  }
-},
-```
-
 ---
 
 ### Data Access Layer (`lib/data-access-layer/`)
@@ -86,17 +72,17 @@ Instead of calling `$fetch` directly from page components, all data fetching goe
 
 ```ts
 // apps/frontend/lib/data-access-layer/auth/get-user.ts
-import "server-only";
-import { $fetch } from "@/lib/api-client";
-import type { GetMeOutput } from "@anvara/schemas";
-import { isAuthenticated } from "@/lib/auth-helpers.server";
-import { redirect } from "next/navigation";
+import 'server-only';
+import { $fetch } from '@/lib/api-client';
+import type { GetMeOutput } from '@anvara/schemas';
+import { isAuthenticated } from '@/lib/auth-helpers.server';
+import { redirect } from 'next/navigation';
 
 export async function getUser(): Promise<GetMeOutput | null> {
   const { isLoggedIn } = await isAuthenticated();
-  if (!isLoggedIn) redirect("/login");
+  if (!isLoggedIn) redirect('/login');
 
-  const { data, error } = await $fetch("@get/api/auth/me");
+  const { data, error } = await $fetch('@get/api/auth/me');
   if (error) return null;
   return data;
 }
@@ -108,9 +94,9 @@ Every data access function follows this same pattern -- `getCampaigns()`, `getAd
 // apps/frontend/lib/data-access-layer/campaigns/get-campaigns.ts
 export async function getCampaigns(sponsorId: string): Promise<ListCampaignsOutput | null> {
   const { isLoggedIn } = await isAuthenticated();
-  if (!isLoggedIn) redirect("/login");
+  if (!isLoggedIn) redirect('/login');
 
-  const { data, error } = await $fetch("@get/api/campaigns", { query: { sponsorId } });
+  const { data, error } = await $fetch('@get/api/campaigns', { query: { sponsorId } });
   if (error) return null;
   return data;
 }
@@ -124,7 +110,7 @@ This matters because it **decouples auth from page components**. The authenticat
 // Without data access layer -- auth is the page's responsibility
 export default async function SomePage() {
   const session = await isAuthenticated(); // easy to forget on a new page
-  const campaigns = await $fetch("@get/api/campaigns", { query: { sponsorId } });
+  const campaigns = await $fetch('@get/api/campaigns', { query: { sponsorId } });
 }
 ```
 
@@ -138,7 +124,7 @@ This is where the data access layer pattern and `React.cache` work together. Eve
 
 ```ts
 // apps/frontend/lib/auth-helpers.server.ts
-import { cache } from "react";
+import { cache } from 'react';
 
 export const isAuthenticated = cache(async () => {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -156,9 +142,9 @@ This is critical because of how the data access layer works. Consider a typical 
 
 ```tsx
 export default async function SponsorDashboard() {
-  const user = await getUser();                    // calls isAuthenticated() internally
-  const role = await getUserRole(user.id);          // calls isAuthenticated() internally
-  const campaigns = await getCampaigns(sponsorId);  // calls isAuthenticated() internally
+  const user = await getUser(); // calls isAuthenticated() internally
+  const role = await getUserRole(user.id); // calls isAuthenticated() internally
+  const campaigns = await getCampaigns(sponsorId); // calls isAuthenticated() internally
 }
 ```
 

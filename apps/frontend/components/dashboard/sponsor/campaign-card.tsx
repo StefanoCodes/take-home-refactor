@@ -1,36 +1,83 @@
 import type { ReactNode } from 'react';
 import { Card, CardHeader } from '@/components/ui/card';
+import { campaignStatusColors } from '@/lib/utils';
 
-const statusColors: Record<string, string> = {
-  DRAFT: 'bg-white/10 text-text-muted',
-  ACTIVE: 'bg-green-500/15 text-green-400',
-  PAUSED: 'bg-yellow-500/15 text-yellow-400',
-  COMPLETED: 'bg-blue-500/15 text-blue-400',
-};
-
-export function CampaignCard({ children }: { children: ReactNode }) {
-  return <Card>{children}</Card>;
-}
-
-export function CampaignCardHeader({ children }: { children: ReactNode }) {
-  return <CardHeader className="mb-2">{children}</CardHeader>;
-}
-
-export function CampaignCardName({ name }: { name: string }) {
-  return <h3 className="font-semibold">{name}</h3>;
-}
-
-export function CampaignCardStatus({ status }: { status: string }) {
+export function CampaignCardRoot({
+  children,
+  className,
+  ...props
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <span className={`rounded-md px-2 py-0.5 text-xs font-medium ${statusColors[status] || 'bg-white/10'}`}>
+    <Card className={className} {...props}>
+      {children}
+    </Card>
+  );
+}
+
+export function CampaignCardHeader({
+  children,
+  className,
+  ...props
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <CardHeader className={className ?? 'mb-2'} {...props}>
+      {children}
+    </CardHeader>
+  );
+}
+
+export function CampaignCardTitle({
+  children,
+  className,
+  ...props
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <h3 className={className ?? 'font-semibold'} {...props}>
+      {children}
+    </h3>
+  );
+}
+
+export function CampaignCardStatusBadge({
+  status,
+  className,
+  ...props
+}: {
+  status: string;
+  className?: string;
+}) {
+  return (
+    <span
+      className={`rounded-md px-2 py-0.5 text-xs font-medium ${campaignStatusColors[status] ?? 'bg-white/10'} ${className ?? ''}`}
+      {...props}
+    >
       {status}
     </span>
   );
 }
 
-export function CampaignCardDescription({ description }: { description: string | null }) {
-  if (!description) return null;
-  return <p className="mb-3 text-sm text-text-muted line-clamp-2">{description}</p>;
+export function CampaignCardDescription({
+  children,
+  className,
+  ...props
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <p className={className ?? 'mb-3 text-sm text-text-muted line-clamp-2'} {...props}>
+      {children}
+    </p>
+  );
 }
 
 export function CampaignCardBudget({ spent, budget }: { spent: number; budget: number }) {

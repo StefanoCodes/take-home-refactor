@@ -1,4 +1,8 @@
-import { bookAdSlotInputSchema } from "@anvara/schemas";
+import {
+	bookAdSlotInputSchema,
+	createAdSlotInputSchema,
+	updateAdSlotInputSchema,
+} from "@anvara/schemas";
 import { z } from "zod";
 
 export const bookAdSlotSchema = bookAdSlotInputSchema.extend({
@@ -12,3 +16,19 @@ export const unbookAdSlotSchema = z.object({
 });
 
 export type UnbookAdSlotSchemaType = z.infer<typeof unbookAdSlotSchema>;
+
+export { createAdSlotInputSchema, updateAdSlotInputSchema };
+
+export type CreateAdSlotSchemaType = z.infer<typeof createAdSlotInputSchema>;
+
+export const updateAdSlotFormSchema = updateAdSlotInputSchema.extend({
+	adSlotId: z.string().min(1),
+});
+
+export type UpdateAdSlotFormSchemaType = z.infer<typeof updateAdSlotFormSchema>;
+
+export const deleteAdSlotSchema = z.object({
+	adSlotId: z.string().min(1),
+});
+
+export type DeleteAdSlotSchemaType = z.infer<typeof deleteAdSlotSchema>;

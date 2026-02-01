@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { authActionClient, ActionError } from "@/lib/action-client";
 import { $fetch } from "@/lib/api-client";
 import { unbookAdSlotSchema } from "@/lib/validations/ad-slots";
@@ -21,6 +22,7 @@ export const unbookAdSlotAction = authActionClient
 			throw new ActionError(error.error ?? "Failed to reset booking");
 		}
 
+		revalidatePath("/dashboard/marketplace");
 		return {
 			success: true,
 			message: data.message,
