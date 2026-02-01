@@ -118,6 +118,21 @@ If a developer creates a new page and forgets the auth check, data is exposed. W
 
 ---
 
+### Optimistic Redirect vs. Security: `proxy.ts` and `getSessionCookie`
+
+Navigation should stay fast. Calling `auth.api.getSession({ headers })` on every request hits the database (via Better Auth) and can slow down every page load. The frontend therefore splits **optimistic redirection** from **actual security checks**.
+
+**`proxy.ts` (middleware)** uses `getSessionCookie(request)` from `better-auth/cookies` instead of `auth.api.getSession`. Reading the cookie is synchronous and does not touch the database. The proxy only decides: if there is no session cookie and the route is protected, redirect to `/login` immediately. This is an **optimistic redirect** — we assume no cookie means not logged in and send the user to login without waiting for a DB round-trip. It improves perceived performance and keeps navigation snappy.
+
+**Security is not enforced in the proxy.** It is enforced in two places:
+
+1. **Page level** — Dashboard pages (e.g. `dashboard/sponsor/page.tsx`, `dashboard/publisher/page.tsx`) call `isAuthenticated()` (which uses `auth.api.getSession` and the DB). If there is no user, they `redirect('/login')`. This is the first real auth boundary.
+2. **Data access layer** — Every data access function (`getUser()`, `getCampaigns()`, `getAdSlots()`, etc.) calls `isAuthenticated()` and redirects if `!isLoggedIn` before fetching any data. So even if a page forgot to check auth, the data layer would still redirect unauthenticated users.
+
+So: **proxy = cookie-only, fast redirect.** **Page + data access = full session check (DB).** The proxy is for UX (quick redirect); the page and data access layer are for security.
+
+---
+
 ### Render-Pass Memoization with `React.cache`
 
 This is where the data access layer pattern and `React.cache` work together. Every data access function calls `isAuthenticated()`, and `isAuthenticated` is wrapped in `cache()`:
@@ -263,3 +278,40 @@ router.post("/:id/book", validateBody(bookAdSlotInputSchema), async (req, res) =
 ```
 
 The Express backend validates with the **exact same `bookAdSlotInputSchema`** from `@anvara/schemas`. Even if an attacker sends a raw HTTP request bypassing both the form and the server action, the Express middleware rejects malformed input. There is no possibility of validation rule drift between layers -- all three share the same Zod schema from the same package.
+
+---
+
+### React Components and Composition
+
+The frontend avoids prop drilling and keeps components focused by using **small, composable building blocks** and **compound components**. Structure is expressed by composing children instead of passing many props through intermediate layers.
+
+**Compound components** — Cards are built from primitives that each own a slice of layout and styling. For example, the marketplace ad slot card is not one big `<AdSlotCard>` that accepts a dozen props. It is a set of pieces that you compose:
+
+```tsx
+// apps/frontend/components/dashboard/marketplace/ad-slot-card.tsx
+export function AdSlotCardRoot({ children, className, ...props }) { ... }
+export function AdSlotCardHeader({ children, className, ...props }) { ... }
+export function AdSlotCardTypeBadge({ type, className, ...props }) { ... }
+export function AdSlotCardFooter({ children, className, ...props }) { ... }
+```
+
+The grid then composes these pieces and passes only the data each piece needs. No need to thread `slot`, `onClick`, or layout flags through multiple levels:
+
+```tsx
+// apps/frontend/components/dashboard/marketplace/ad-slot-grid.tsx
+<AdSlotCardRoot>
+  <AdSlotCardHeader>
+    <h3>{slot.name}</h3>
+    <AdSlotCardTypeBadge type={slot.type} />
+  </AdSlotCardHeader>
+  {slot.description && <p>{slot.description}</p>}
+  <AdSlotCardFooter>
+    <span>{slot.isAvailable ? 'Available' : 'Booked'}</span>
+    <span>${slot.basePrice}/mo</span>
+  </AdSlotCardFooter>
+</AdSlotCardRoot>
+```
+
+**Reuse without prop drilling** — The same primitives are reused in different contexts. The publisher dashboard uses `AdSlotCardRoot`, `AdSlotCardHeader`, `AdSlotCardTypeBadge`, and `AdSlotCardFooter` inside `AdSlotCardWithActions`, which adds edit/delete buttons and dialogs. The card building blocks stay dumb and presentational; the “with actions” wrapper owns client state and callbacks. No need to pass action handlers or modal state down through a generic card component.
+
+The sponsor dashboard follows the same pattern: `CampaignCardRoot`, `CampaignCardHeader`, `CampaignCardTitle`, `CampaignCardStatusBadge`, `CampaignCardDescription`, `CampaignCardBudget`, `CampaignCardDateRange` are composed in both read-only views and in `CampaignCardWithActions`. Each primitive receives only the props it needs (e.g. `status`, `spent`, `budget`), and the parent arranges them. That keeps components small, testable, and easy to change without touching unrelated code.

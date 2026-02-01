@@ -14,6 +14,7 @@ const features = [
         strokeLinecap="round"
         strokeLinejoin="round"
       >
+        <title>Curated Placements</title>
         <rect x="3" y="3" width="7" height="7" rx="1.5" />
         <rect x="14" y="3" width="7" height="7" rx="1.5" />
         <rect x="3" y="14" width="7" height="7" rx="1.5" />
@@ -36,6 +37,7 @@ const features = [
         strokeLinecap="round"
         strokeLinejoin="round"
       >
+        <title>Transparent Pricing</title>
         <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
       </svg>
     ),
@@ -55,6 +57,7 @@ const features = [
         strokeLinecap="round"
         strokeLinejoin="round"
       >
+        <title>Campaign Management</title>
         <path d="M3 3v18h18" />
         <path d="M7 16l4-8 4 5 5-9" />
       </svg>
@@ -75,6 +78,7 @@ const features = [
         strokeLinecap="round"
         strokeLinejoin="round"
       >
+        <title>Publisher Tools</title>
         <path d="M12 20h9" />
         <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838.838-2.872a2 2 0 0 1 .506-.855z" />
       </svg>

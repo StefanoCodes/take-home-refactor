@@ -15,7 +15,9 @@ export default async function SponsorDashboard() {
 
   const roleData = await getUserRole(user.id);
 
-  if (roleData.role !== 'sponsor') {
+  const isSponsor = roleData.role === 'sponsor';
+
+  if (!isSponsor) {
     return redirect('/');
   }
 

@@ -1,5 +1,9 @@
+import { FinalCta } from '@/components/layout/cta/final-cta';
+import { Audiences } from '@/components/marketing/audiences';
+import { Features } from '@/components/marketing/features';
+import { Hero } from '@/components/marketing/hero';
+import { HowItWorks } from '@/components/marketing/how-it-works';
 import type { Metadata } from 'next';
-import { Hero, Features, HowItWorks, Audiences, FinalCta } from '@/components/marketing';
 
 export const metadata: Metadata = {
   title: 'Anvara — The Sponsorship Marketplace',
