@@ -29,8 +29,8 @@ export function LogoutButton() {
         disabled={isPending}
         className="rounded bg-gray-600 px-3 py-1.5 text-sm text-white hover:bg-gray-500 disabled:opacity-50"
       >
-        {isPending && <Loader2 className="mr-1 inline size-3.5 animate-spin" />}
         {isPending ? 'Logging out...' : 'Logout'}
+        {isPending && <Loader2 className="ml-2 inline size-3.5 animate-spin" />}
       </Button>
     </form>
   );

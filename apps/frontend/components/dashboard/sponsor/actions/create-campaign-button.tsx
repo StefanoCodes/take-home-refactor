@@ -23,8 +23,8 @@ export function CreateCampaignButton({ sponsorId }: Props) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
-          <Plus className="size-4" />
           Create campaign
+          <Plus className="size-4 ml-2" />
         </Button>
       </DialogTrigger>
       <DialogContent>

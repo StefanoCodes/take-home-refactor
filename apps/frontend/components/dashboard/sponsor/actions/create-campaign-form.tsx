@@ -149,8 +149,8 @@ export function CreateCampaignForm({ sponsorId, onSuccess }: Props) {
           )}
         />
         <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending && <Loader2 className="size-4 animate-spin" />}
           {isPending ? 'Creating...' : 'Create campaign'}
+          {isPending && <Loader2 className="size-4 ml-2 animate-spin" />}
         </Button>
       </form>
     </Form>

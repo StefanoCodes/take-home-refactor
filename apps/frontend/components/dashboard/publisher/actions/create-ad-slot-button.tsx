@@ -23,8 +23,8 @@ export function CreateAdSlotButton({ publisherId }: Props) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
-          <Plus className="size-4" />
           Create ad slot
+          <Plus className="size-4 ml-2" />
         </Button>
       </DialogTrigger>
       <DialogContent>

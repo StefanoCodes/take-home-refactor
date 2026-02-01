@@ -149,8 +149,8 @@ export function CreateAdSlotForm({ publisherId, onSuccess }: Props) {
           )}
         />
         <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending && <Loader2 className="size-4 animate-spin" />}
           {isPending ? 'Creating...' : 'Create ad slot'}
+          {isPending && <Loader2 className="size-4 ml-2 animate-spin" />}
         </Button>
       </form>
     </Form>

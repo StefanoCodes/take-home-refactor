@@ -23,11 +23,9 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[--color-background]">
-      <div className="w-full max-w-md rounded-lg border border-[--color-border] p-6 shadow-sm">
-        <h1 className="mb-6 text-2xl font-bold">Login to Anvara</h1>
-        <LoginForm />
-      </div>
+    <div className="w-full max-w-md mx-auto mt-10 rounded-lg border border-white/10 p-6 shadow-sm">
+      <h1 className="mb-6 text-2xl font-bold">Login to Anvara</h1>
+      <LoginForm />
     </div>
   );
 }

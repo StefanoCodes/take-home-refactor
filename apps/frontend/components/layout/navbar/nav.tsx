@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { isAuthenticated } from '@/lib/auth-helpers.server';
 import { getUserRole } from '@/lib/data-access-layer/auth/get-user-role';
 import { NavLinks } from './nav-links';
@@ -15,7 +14,7 @@ export async function Nav() {
   }
 
   return (
-    <header className="border-b fixed top-0 left-0 right-0 z-50 border-white/[0.08] bg-background">
+    <header className="border-b fixed top-0 left-0 right-0 z-50 border-white/10 bg-background">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4">
         <Logo />
 

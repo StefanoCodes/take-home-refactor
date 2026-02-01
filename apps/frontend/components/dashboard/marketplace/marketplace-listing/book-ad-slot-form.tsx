@@ -83,8 +83,8 @@ export function BookAdSlotForm({ adSlotId, sponsorId, sponsorName }: Props) {
         />
 
         <Button type="submit" className="w-full py-3" disabled={isPending}>
-          {isPending && <Loader2 className="size-4 animate-spin" />}
           {isPending ? 'Booking...' : 'Book This Placement'}
+          {isPending && <Loader2 className="size-4 ml-2 animate-spin" />}
         </Button>
       </form>
     </Form>

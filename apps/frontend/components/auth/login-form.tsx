@@ -80,10 +80,10 @@ export function LoginForm() {
         />
 
         <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending && <Loader2 className="size-4 animate-spin" />}
           {isPending
             ? 'Logging in...'
             : `Login as ${selectedRole === 'sponsor' ? 'Sponsor' : 'Publisher'}`}
+          {isPending && <Loader2 className="size-4 animate-spin ml-2" />}
         </Button>
       </form>
     </Form>
