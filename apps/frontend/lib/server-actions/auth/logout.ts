@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/lib/auth.server";
+import { auth } from "@/lib/auth-client.server";
 import { actionClient, ActionError } from "@/lib/action-client";
 import { headers } from "next/headers";
 
