@@ -7,7 +7,10 @@
   --foreground: #fff;
   --border-primary: #1E3FE6;
   --border-secondary: #C3C3C3ee;
-  
+
+  /* Layout */
+  --navbar-height: 4rem;
+
   /* Brand Colors */
   --color-brand-primary: #2446F4;
   --color-brand-blue: #4057FF;
@@ -66,7 +69,7 @@
   --font-size-hero-mobile: 2.5rem;
   
   /* Layout */
-  --navbar-height: 6.125rem;
+  --navbar-height: var(--navbar-height);
 }
 
 body {

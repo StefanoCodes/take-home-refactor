@@ -2,11 +2,7 @@
 
 import { authActionClient, ActionError } from "@/lib/action-client";
 import { $fetch } from "@/lib/api-client";
-import { z } from "zod";
-
-const unbookAdSlotSchema = z.object({
-	adSlotId: z.string().min(1),
-});
+import { unbookAdSlotSchema } from "@/lib/validations/ad-slots";
 
 export const unbookAdSlotAction = authActionClient
 	.metadata({

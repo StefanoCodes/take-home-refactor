@@ -17,19 +17,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { loginAction } from '@/lib/server-actions/auth/login';
+import { loginSchema, type LoginSchemaType } from '@/lib/validations/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-
-export const loginSchema = z.object({
-  role: z.enum(['sponsor', 'publisher'], {
-    required_error: 'Please select a role',
-  }),
-});
-export type LoginSchemaType = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
   const router = useRouter();

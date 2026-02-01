@@ -12,7 +12,7 @@ export function validateBody(schema: ZodSchema) {
 
 		if (!result.success) {
 			const errors = result.error.flatten().fieldErrors;
-			sendError(res, 400, "Validation failed");
+			sendError(res, 400, `Validation failed: ${errors}`);
 			return;
 		}
 

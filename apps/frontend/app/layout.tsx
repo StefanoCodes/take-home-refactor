@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <GoogleTagManager gtmId="G-NWHC9C48N5" />
-      <body className={`min-h-dvh antialiased ${neueHaas.variable}`}>
+      <body className={`min-h-dvh pt-(--navbar-height) antialiased ${neueHaas.variable}`}>
         <Nav />
         {children}
         <Toaster richColors position="top-center" />

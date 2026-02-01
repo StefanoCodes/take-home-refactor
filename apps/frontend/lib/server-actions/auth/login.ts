@@ -3,7 +3,7 @@
 import { auth } from "@/lib/auth.server";
 import { actionClient, ActionError } from "@/lib/action-client";
 import { getUserRole } from "@/lib/data-access-layer/auth/get-user-role";
-import { loginSchema } from "@/components/auth/login-form";
+import { loginSchema } from "@/lib/validations/auth";
 import { headers } from "next/headers";
 
 const CREDENTIALS = {

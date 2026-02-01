@@ -2,7 +2,7 @@
 
 import { authActionClient, ActionError } from "@/lib/action-client";
 import { $fetch } from "@/lib/api-client";
-import { bookAdSlotSchema } from "@/components/dashboard/marketplace/marketplace-listing/book-ad-slot-form";
+import { bookAdSlotSchema } from "@/lib/validations/ad-slots";
 
 export const bookAdSlotAction = authActionClient
 	.metadata({
