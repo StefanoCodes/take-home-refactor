@@ -45,6 +45,7 @@ export default async function AdSlotPage({ params }: Props) {
   const isAvailable = adSlot.isAvailable;
   const isBooked = !isAvailable;
   const isSponsor = roleInfo.role === 'sponsor';
+  const isPublisherOwner = adSlot.publisher?.userId === user.id;
   const hasPublisher = !!adSlot.publisher;
   const hasPublisherWebsite = !!adSlot.publisher?.website;
   const hasDescription = !!adSlot.description;
@@ -98,12 +99,6 @@ export default async function AdSlotPage({ params }: Props) {
               />
               {isAvailable ? 'Available' : 'Currently Booked'}
             </span>
-            {isBooked && (
-              <UnbookAdSlotButton
-                adSlotId={adSlot.id}
-                className="ml-3 text-sm text-blue-400/80 underline transition-colors hover:text-blue-300"
-              />
-            )}
           </div>
           <div className="text-right">
             <p className="text-3xl font-bold tracking-tight text-white/85">
@@ -112,6 +107,12 @@ export default async function AdSlotPage({ params }: Props) {
             <p className="text-sm text-white/35">per month</p>
           </div>
         </AdSlotDetailFooter>
+
+        {isBooked && isPublisherOwner && (
+          <AdSlotDetailSection>
+            <UnbookAdSlotButton adSlotId={adSlot.id} />
+          </AdSlotDetailSection>
+        )}
 
         {isAvailable && (
           <AdSlotDetailSection>

@@ -1,6 +1,8 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { unbookAdSlotAction } from '@/lib/server-actions/ad-slots/unbook-ad-slot';
+import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 import { toast } from 'sonner';
@@ -8,10 +10,9 @@ import { toast } from 'sonner';
 interface Props {
   adSlotId: string;
   label?: string;
-  className?: string;
 }
 
-export function UnbookAdSlotButton({ adSlotId, label = 'Reset listing', className }: Props) {
+export function UnbookAdSlotButton({ adSlotId, label = 'Reset listing' }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -35,15 +36,9 @@ export function UnbookAdSlotButton({ adSlotId, label = 'Reset listing', classNam
   };
 
   return (
-    <button
-      type="button"
-      onClick={handleUnbook}
-      disabled={isPending}
-      className={
-        className ?? 'text-sm text-brand-primary underline hover:opacity-80 disabled:opacity-50'
-      }
-    >
+    <Button type="button" onClick={handleUnbook} disabled={isPending} className="w-full py-3">
       {isPending ? 'Resetting...' : label}
-    </button>
+      {isPending && <Loader2 className="ml-2 size-4 animate-spin" />}
+    </Button>
   );
 }

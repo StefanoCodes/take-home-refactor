@@ -74,10 +74,9 @@ router.get("/", async (req: Request, res: Response) => {
 	}
 });
 
-// GET /api/ad-slots/:id - Get single ad slot (verify ownership)
+// GET /api/ad-slots/:id - Get single ad slot
 router.get("/:id", async (req: Request, res: Response) => {
 	try {
-		const { user } = req as AuthRequest;
 		const id = getParam(req.params.id);
 
 		const adSlot = await prisma.adSlot.findUnique({
@@ -94,11 +93,6 @@ router.get("/:id", async (req: Request, res: Response) => {
 
 		if (!adSlot) {
 			sendError(res, 404, "Ad slot not found");
-			return;
-		}
-
-		if (adSlot.publisher.userId !== user.id) {
-			sendError(res, 403, "Forbidden");
 			return;
 		}
 
@@ -136,7 +130,11 @@ router.post(
 				},
 			});
 
-			res.status(201).json(adSlot);
+			res.status(201).json({
+				...adSlot,
+				basePrice: Number(adSlot.basePrice),
+				cpmFloor: adSlot.cpmFloor ? Number(adSlot.cpmFloor) : null,
+			});
 		} catch (error) {
 			console.error("Error creating ad slot:", error);
 			sendError(res, 500, "Failed to create ad slot");
@@ -189,7 +187,11 @@ router.post(
 			res.json({
 				success: true,
 				message: "Ad slot booked successfully!",
-				adSlot: updatedSlot,
+				adSlot: {
+					...updatedSlot,
+					basePrice: Number(updatedSlot.basePrice),
+					cpmFloor: updatedSlot.cpmFloor ? Number(updatedSlot.cpmFloor) : null,
+				},
 			});
 		} catch (error) {
 			console.error("Error booking ad slot:", error);
@@ -230,7 +232,11 @@ router.post("/:id/unbook", async (req: Request, res: Response) => {
 		res.json({
 			success: true,
 			message: "Ad slot is now available again",
-			adSlot: updatedSlot,
+			adSlot: {
+				...updatedSlot,
+				basePrice: Number(updatedSlot.basePrice),
+				cpmFloor: updatedSlot.cpmFloor ? Number(updatedSlot.cpmFloor) : null,
+			},
 		});
 	} catch (error) {
 		console.error("Error unbooking ad slot:", error);
@@ -270,7 +276,11 @@ router.put(
 				},
 			});
 
-			res.json(updated);
+			res.json({
+				...updated,
+				basePrice: Number(updated.basePrice),
+				cpmFloor: updated.cpmFloor ? Number(updated.cpmFloor) : null,
+			});
 		} catch (error) {
 			console.error("Error updating ad slot:", error);
 			sendError(res, 500, "Failed to update ad slot");
