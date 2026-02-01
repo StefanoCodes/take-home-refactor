@@ -23,14 +23,14 @@ export function AdSlotCard({
       </AdSlotCardHeader>
 
       {description && (
-        <p className="mb-3 text-sm text-[--color-muted] line-clamp-2">{description}</p>
+        <p className="mb-3 text-sm text-text-muted line-clamp-2">{description}</p>
       )}
 
       <AdSlotCardFooter>
-        <span className={`text-sm ${isAvailable ? 'text-green-600' : 'text-[--color-muted]'}`}>
+        <span className={`text-sm ${isAvailable ? 'text-green-400' : 'text-text-muted'}`}>
           {isAvailable ? 'Available' : 'Booked'}
         </span>
-        <span className="font-semibold text-[--color-primary]">
+        <span className="font-semibold text-brand-primary">
           ${Number(basePrice).toLocaleString()}/mo
         </span>
       </AdSlotCardFooter>

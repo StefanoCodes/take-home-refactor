@@ -14,7 +14,7 @@ export async function CampaignGrid({ sponsorId }: { sponsorId: string }) {
 
   if (campaigns.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-[--color-border] p-8 text-center text-[--color-muted]">
+      <div className="rounded-xl border border-dashed border-white/[0.08] p-8 text-center text-text-muted">
         No campaigns yet. Create your first campaign to get started.
       </div>
     );

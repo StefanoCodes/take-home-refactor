@@ -1,6 +1,7 @@
 import type { AdSlotType } from '@anvara/schemas';
 import type React from 'react';
 import { cn } from '@/lib/utils';
+import { Card } from '@/components/ui/card';
 
 interface AdSlotDetailRootProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -20,12 +21,9 @@ interface AdSlotDetailCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function AdSlotDetailCard({ children, className, ...props }: AdSlotDetailCardProps) {
   return (
-    <div
-      className={cn('rounded-lg border border-[--color-border] p-6', className)}
-      {...props}
-    >
+    <Card className={cn('p-6', className)} {...props}>
       {children}
-    </div>
+    </Card>
   );
 }
 
@@ -42,11 +40,11 @@ export function AdSlotDetailHeader({ children, className, ...props }: AdSlotDeta
 }
 
 const typeColors: Record<AdSlotType, string> = {
-  DISPLAY: 'bg-blue-100 text-blue-700',
-  VIDEO: 'bg-red-100 text-red-700',
-  NATIVE: 'bg-green-100 text-green-700',
-  NEWSLETTER: 'bg-purple-100 text-purple-700',
-  PODCAST: 'bg-orange-100 text-orange-700',
+  DISPLAY: 'bg-blue-500/15 text-blue-400',
+  VIDEO: 'bg-red-500/15 text-red-400',
+  NATIVE: 'bg-green-500/15 text-green-400',
+  NEWSLETTER: 'bg-purple-500/15 text-purple-400',
+  PODCAST: 'bg-orange-500/15 text-orange-400',
 };
 
 interface AdSlotDetailTypeBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
@@ -56,7 +54,7 @@ interface AdSlotDetailTypeBadgeProps extends React.HTMLAttributes<HTMLSpanElemen
 export function AdSlotDetailTypeBadge({ type, className, ...props }: AdSlotDetailTypeBadgeProps) {
   return (
     <span
-      className={cn('rounded px-3 py-1 text-sm', typeColors[type] || 'bg-gray-100', className)}
+      className={cn('rounded-md px-3 py-1 text-sm font-medium', typeColors[type] || 'bg-white/10 text-text-muted', className)}
       {...props}
     >
       {type}
@@ -71,7 +69,7 @@ interface AdSlotDetailFooterProps extends React.HTMLAttributes<HTMLDivElement> {
 export function AdSlotDetailFooter({ children, className, ...props }: AdSlotDetailFooterProps) {
   return (
     <div
-      className={cn('flex items-center justify-between border-t border-[--color-border] pt-4', className)}
+      className={cn('flex items-center justify-between border-t border-white/[0.08] pt-4', className)}
       {...props}
     >
       {children}
@@ -86,7 +84,7 @@ interface AdSlotDetailSectionProps extends React.HTMLAttributes<HTMLDivElement> 
 export function AdSlotDetailSection({ children, className, ...props }: AdSlotDetailSectionProps) {
   return (
     <div
-      className={cn('mt-6 border-t border-[--color-border] pt-6', className)}
+      className={cn('mt-6 border-t border-white/[0.08] pt-6', className)}
       {...props}
     >
       {children}

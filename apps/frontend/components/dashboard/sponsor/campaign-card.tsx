@@ -1,18 +1,19 @@
 import type { ReactNode } from 'react';
+import { Card, CardHeader } from '@/components/ui/card';
 
 const statusColors: Record<string, string> = {
-  DRAFT: 'bg-gray-100 text-gray-600',
-  ACTIVE: 'bg-green-100 text-green-700',
-  PAUSED: 'bg-yellow-100 text-yellow-700',
-  COMPLETED: 'bg-blue-100 text-blue-700',
+  DRAFT: 'bg-white/10 text-text-muted',
+  ACTIVE: 'bg-green-500/15 text-green-400',
+  PAUSED: 'bg-yellow-500/15 text-yellow-400',
+  COMPLETED: 'bg-blue-500/15 text-blue-400',
 };
 
 export function CampaignCard({ children }: { children: ReactNode }) {
-  return <div className="rounded-lg border border-[--color-border] p-4">{children}</div>;
+  return <Card>{children}</Card>;
 }
 
 export function CampaignCardHeader({ children }: { children: ReactNode }) {
-  return <div className="mb-2 flex items-start justify-between">{children}</div>;
+  return <CardHeader className="mb-2">{children}</CardHeader>;
 }
 
 export function CampaignCardName({ name }: { name: string }) {
@@ -21,7 +22,7 @@ export function CampaignCardName({ name }: { name: string }) {
 
 export function CampaignCardStatus({ status }: { status: string }) {
   return (
-    <span className={`rounded px-2 py-0.5 text-xs ${statusColors[status] || 'bg-gray-100'}`}>
+    <span className={`rounded-md px-2 py-0.5 text-xs font-medium ${statusColors[status] || 'bg-white/10'}`}>
       {status}
     </span>
   );
@@ -29,7 +30,7 @@ export function CampaignCardStatus({ status }: { status: string }) {
 
 export function CampaignCardDescription({ description }: { description: string | null }) {
   if (!description) return null;
-  return <p className="mb-3 text-sm text-[--color-muted] line-clamp-2">{description}</p>;
+  return <p className="mb-3 text-sm text-text-muted line-clamp-2">{description}</p>;
 }
 
 export function CampaignCardBudget({ spent, budget }: { spent: number; budget: number }) {
@@ -38,14 +39,14 @@ export function CampaignCardBudget({ spent, budget }: { spent: number; budget: n
   return (
     <div className="mb-2">
       <div className="flex justify-between text-sm">
-        <span className="text-[--color-muted]">Budget</span>
+        <span className="text-text-muted">Budget</span>
         <span>
           ${spent.toLocaleString()} / ${budget.toLocaleString()}
         </span>
       </div>
-      <div className="mt-1 h-1.5 rounded-full bg-gray-200">
+      <div className="mt-1 h-1.5 rounded-full bg-white/10">
         <div
-          className="h-1.5 rounded-full bg-[--color-primary]"
+          className="h-1.5 rounded-full bg-brand-primary"
           style={{ width: `${Math.min(progress, 100)}%` }}
         />
       </div>
@@ -61,7 +62,7 @@ export function CampaignCardDateRange({
   endDate: string;
 }) {
   return (
-    <div className="text-xs text-[--color-muted]">
+    <div className="text-xs text-text-muted">
       {new Date(startDate).toLocaleDateString()} - {new Date(endDate).toLocaleDateString()}
     </div>
   );

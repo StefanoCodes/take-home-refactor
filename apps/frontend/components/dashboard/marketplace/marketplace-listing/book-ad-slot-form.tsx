@@ -57,10 +57,10 @@ export function BookAdSlotForm({ adSlotId, sponsorId, sponsorName }: Props) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label htmlFor="message" className="mb-1 block text-sm font-medium text-[--color-muted]">
+          <label htmlFor="message" className="mb-1 block text-sm font-medium text-text-muted">
             Your Company
           </label>
-          <p className="text-[--color-foreground]">{sponsorName}</p>
+          <p className="text-foreground">{sponsorName}</p>
         </div>
 
         <FormField
@@ -68,14 +68,14 @@ export function BookAdSlotForm({ adSlotId, sponsorId, sponsorName }: Props) {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[--color-muted]">
+              <FormLabel className="text-text-muted">
                 Message to Publisher (optional)
               </FormLabel>
               <FormControl>
                 <textarea
                   {...field}
                   placeholder="Tell the publisher about your campaign goals..."
-                  className="w-full rounded-lg border border-[--color-border] bg-[--color-background] px-3 py-2 text-[--color-foreground] placeholder:text-[--color-muted] focus:border-[--color-primary] focus:outline-none focus:ring-1 focus:ring-[--color-primary]"
+                  className="w-full rounded-lg border border-white/[0.08] bg-background px-3 py-2 text-foreground placeholder:text-text-muted focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary"
                   rows={3}
                 />
               </FormControl>

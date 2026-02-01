@@ -20,7 +20,7 @@ const buttonVariants = cva(
         primary:
           'button-primary-gradient button-primary-shadow text-white text-opacity-95 font-medium leading-[1.5] text-sm font-display hover:opacity-90 transition-opacity duration-200',
         secondary:
-          'button-secondary-gradient border-[#C3C3C3] border text-[#2A2A2A] font-medium text-sm font-display  hover:opacity-90 transition-opacity duration-200',
+          'button-secondary-gradient border border-border-secondary text-text-primary font-medium text-sm font-display hover:opacity-90 transition-opacity duration-200',
       },
     },
   }

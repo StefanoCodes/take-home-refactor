@@ -1,6 +1,7 @@
 import type { AdSlotType } from '@anvara/schemas';
 import type React from 'react';
 import { cn } from '@/lib/utils';
+import { Card, CardHeader, CardFooter } from '@/components/ui/card';
 
 interface AdSlotCardRootProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -8,15 +9,15 @@ interface AdSlotCardRootProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function AdSlotCardRoot({ children, className, ...props }: AdSlotCardRootProps) {
   return (
-    <div
+    <Card
       className={cn(
-        'block rounded-lg border border-[--color-border] p-4 transition-shadow hover:shadow-md',
+        'transition-all hover:border-white/[0.15] hover:shadow-md',
         className,
       )}
       {...props}
     >
       {children}
-    </div>
+    </Card>
   );
 }
 
@@ -26,18 +27,18 @@ interface AdSlotCardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function AdSlotCardHeader({ children, className, ...props }: AdSlotCardHeaderProps) {
   return (
-    <div className={cn('mb-2 flex items-start justify-between', className)} {...props}>
+    <CardHeader className={cn('mb-2', className)} {...props}>
       {children}
-    </div>
+    </CardHeader>
   );
 }
 
 const typeColors: Record<AdSlotType, string> = {
-  DISPLAY: 'bg-blue-100 text-blue-700',
-  VIDEO: 'bg-red-100 text-red-700',
-  NATIVE: 'bg-green-100 text-green-700',
-  NEWSLETTER: 'bg-purple-100 text-purple-700',
-  PODCAST: 'bg-orange-100 text-orange-700',
+  DISPLAY: 'bg-blue-500/15 text-blue-400',
+  VIDEO: 'bg-red-500/15 text-red-400',
+  NATIVE: 'bg-green-500/15 text-green-400',
+  NEWSLETTER: 'bg-purple-500/15 text-purple-400',
+  PODCAST: 'bg-orange-500/15 text-orange-400',
 };
 
 interface AdSlotCardTypeBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
@@ -47,7 +48,7 @@ interface AdSlotCardTypeBadgeProps extends React.HTMLAttributes<HTMLSpanElement>
 export function AdSlotCardTypeBadge({ type, className, ...props }: AdSlotCardTypeBadgeProps) {
   return (
     <span
-      className={cn('rounded px-2 py-0.5 text-xs', typeColors[type] || 'bg-gray-100', className)}
+      className={cn('rounded-md px-2 py-0.5 text-xs font-medium', typeColors[type] || 'bg-white/10 text-text-muted', className)}
       {...props}
     >
       {type}
@@ -61,8 +62,8 @@ interface AdSlotCardFooterProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function AdSlotCardFooter({ children, className, ...props }: AdSlotCardFooterProps) {
   return (
-    <div className={cn('flex items-center justify-between', className)} {...props}>
+    <CardFooter className={className} {...props}>
       {children}
-    </div>
+    </CardFooter>
   );
 }

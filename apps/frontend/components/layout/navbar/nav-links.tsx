@@ -22,8 +22,8 @@ export function NavLinks({ role }: { role: UserRole }) {
           href={link.href}
           className={
             pathname === link.href
-              ? 'text-[--color-foreground] font-medium'
-              : 'text-[--color-muted] hover:text-[--color-foreground]'
+              ? 'text-foreground font-medium'
+              : 'text-text-muted hover:text-foreground transition-colors'
           }
         >
           {link.label}
@@ -35,8 +35,8 @@ export function NavLinks({ role }: { role: UserRole }) {
           href={roleLinks[role].href}
           className={
             pathname === roleLinks[role].href
-              ? 'text-[--color-foreground] font-medium'
-              : 'text-[--color-muted] hover:text-[--color-foreground]'
+              ? 'text-foreground font-medium'
+              : 'text-text-muted hover:text-foreground transition-colors'
           }
         >
           {roleLinks[role].label}

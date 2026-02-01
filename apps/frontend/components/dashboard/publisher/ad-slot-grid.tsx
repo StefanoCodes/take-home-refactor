@@ -8,7 +8,7 @@ export async function AdSlotGrid({ publisherId }: { publisherId: string }) {
 
   if (!hasAdSlots) {
     return (
-      <div className="rounded-lg border border-dashed border-[--color-border] p-8 text-center text-[--color-muted]">
+      <div className="rounded-xl border border-dashed border-white/[0.08] p-8 text-center text-text-muted">
         No ad slots yet. Create your first ad slot to start earning.
       </div>
     );

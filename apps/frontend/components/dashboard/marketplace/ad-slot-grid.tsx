@@ -14,7 +14,7 @@ export async function AdSlotGrid() {
 
   if (!hasAdSlots) {
     return (
-      <div className="rounded-lg border border-dashed border-[--color-border] p-12 text-center text-[--color-muted]">
+      <div className="rounded-xl border border-dashed border-white/[0.08] p-12 text-center text-text-muted">
         No ad slots available at the moment.
       </div>
     );
@@ -31,20 +31,20 @@ export async function AdSlotGrid() {
             </AdSlotCardHeader>
 
             {slot.publisher && (
-              <p className="mb-2 text-sm text-[--color-muted]">by {slot.publisher.name}</p>
+              <p className="mb-2 text-sm text-text-muted">by {slot.publisher.name}</p>
             )}
 
             {slot.description && (
-              <p className="mb-3 text-sm text-[--color-muted] line-clamp-2">{slot.description}</p>
+              <p className="mb-3 text-sm text-text-muted line-clamp-2">{slot.description}</p>
             )}
 
             <AdSlotCardFooter>
               <span
-                className={`text-sm ${slot.isAvailable ? 'text-green-600' : 'text-[--color-muted]'}`}
+                className={`text-sm ${slot.isAvailable ? 'text-green-400' : 'text-text-muted'}`}
               >
                 {slot.isAvailable ? 'Available' : 'Booked'}
               </span>
-              <span className="font-semibold text-[--color-primary]">
+              <span className="font-semibold text-brand-primary">
                 ${Number(slot.basePrice).toLocaleString()}/mo
               </span>
             </AdSlotCardFooter>
