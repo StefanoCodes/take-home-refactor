@@ -9,7 +9,7 @@ interface LogoProps extends React.HTMLAttributes<HTMLAnchorElement> {
 export function Logo({ className, ...props }: LogoProps) {
   return (
     <Link href="/" className={cn('text-2xl font-bold', className)} {...props}>
-      <Image src={logo} alt="Anvara" width={100} height={100} />
+      <Image src={logo} alt="Anvara" className="w-full h-5" />
     </Link>
   );
 }
