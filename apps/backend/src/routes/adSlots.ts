@@ -7,7 +7,11 @@ import {
 import { prisma } from "../db.js";
 import { validateBody } from "../middleware/validate.js";
 import { requireAuth, type AuthRequest } from "../middleware/authenticate.js";
-import { getOwnedPublisher, isPublisherOwner, isSponsorOwner } from "../middleware/authorize.js";
+import {
+	getOwnedPublisher,
+	isPublisherOwner,
+	isSponsorOwner,
+} from "../middleware/authorize.js";
 import { getParam, sendError } from "../utils/helpers.js";
 
 const router: IRouter = Router();
@@ -15,42 +19,55 @@ const router: IRouter = Router();
 // All ad-slot routes require authentication
 router.use(requireAuth);
 
-// GET /api/ad-slots - List ad slots for the authenticated user's publisher
+// GET /api/ad-slots - List ad slots with pagination and filters
 router.get("/", async (req: Request, res: Response) => {
 	try {
-		const { user } = req as AuthRequest;
-		const { type, available } = req.query;
+		const { type, available, publisherId } = req.query;
+		const page = Math.max(1, Number(req.query.page) || 1);
+		const limit = Math.min(50, Math.max(1, Number(req.query.limit) || 6));
+		const skip = (page - 1) * limit;
 
-		const publisher = await getOwnedPublisher(user.id);
+		const where = {
+			...(publisherId && { publisherId: publisherId as string }),
+			...(type && {
+				type: type as string as
+					| "DISPLAY"
+					| "VIDEO"
+					| "NATIVE"
+					| "NEWSLETTER"
+					| "PODCAST",
+			}),
+			...(available === "true" && { isAvailable: true }),
+		};
 
-		if (!publisher) {
-			res.json([]);
-			return;
-		}
-
-		const adSlots = await prisma.adSlot.findMany({
-			where: {
-				publisherId: publisher.id,
-				...(type && {
-					type: type as string as
-						| "DISPLAY"
-						| "VIDEO"
-						| "NATIVE"
-						| "NEWSLETTER"
-						| "PODCAST",
-				}),
-				...(available === "true" && { isAvailable: true }),
-			},
-			include: {
-				publisher: {
-					select: { id: true, name: true, category: true, monthlyViews: true },
+		const [adSlots, total] = await Promise.all([
+			prisma.adSlot.findMany({
+				where,
+				include: {
+					publisher: {
+						select: { id: true, name: true, category: true, monthlyViews: true },
+					},
+					_count: { select: { placements: true } },
 				},
-				_count: { select: { placements: true } },
-			},
-			orderBy: { basePrice: "desc" },
-		});
+				orderBy: { basePrice: "desc" },
+				skip,
+				take: limit,
+			}),
+			prisma.adSlot.count({ where }),
+		]);
 
-		res.json(adSlots);
+		const totalPages = Math.ceil(total / limit);
+
+		res.json({
+			data: adSlots,
+			pagination: {
+				page,
+				limit,
+				total,
+				totalPages,
+				hasMore: page < totalPages,
+			},
+		});
 	} catch (error) {
 		console.error("Error fetching ad slots:", error);
 		sendError(res, 500, "Failed to fetch ad slots");

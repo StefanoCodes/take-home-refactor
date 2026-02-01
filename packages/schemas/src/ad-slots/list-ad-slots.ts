@@ -6,6 +6,8 @@ export const listAdSlotsQuerySchema = z.object({
 	publisherId: z.string().optional(),
 	type: adSlotTypeSchema.optional(),
 	available: z.string().optional(),
+	page: z.coerce.number().int().min(1).optional().default(1),
+	limit: z.coerce.number().int().min(1).max(50).optional().default(6),
 });
 
 export const adSlotListItemSchema = z.object({
@@ -33,7 +35,16 @@ export const adSlotListItemSchema = z.object({
 	}),
 });
 
-export const listAdSlotsOutputSchema = z.array(adSlotListItemSchema);
+export const listAdSlotsOutputSchema = z.object({
+	data: z.array(adSlotListItemSchema),
+	pagination: z.object({
+		page: z.number(),
+		limit: z.number(),
+		total: z.number(),
+		totalPages: z.number(),
+		hasMore: z.boolean(),
+	}),
+});
 
 /**
  * TypeScript types

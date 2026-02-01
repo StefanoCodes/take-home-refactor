@@ -46,6 +46,7 @@ export function LoginForm() {
       }
 
       toast.success(payload.message);
+      router.refresh();
       router.push(payload.redirectTo);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Login failed');

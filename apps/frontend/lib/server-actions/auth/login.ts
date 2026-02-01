@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth-client.server";
 import { actionClient, ActionError } from "@/lib/action-client";
 import { loginSchema } from "@/lib/validations/auth";
 import { headers } from "next/headers";
+import { revalidatePath } from "next/cache";
 
 const CREDENTIALS = {
 	sponsor: { email: "sponsor@example.com", password: "password" },
@@ -40,6 +41,8 @@ export const loginAction = actionClient
 
 			const redirectTo =
 				role === "sponsor" ? "/dashboard/sponsor" : "/dashboard/publisher";
+
+			revalidatePath("/dashboard");
 
 			return {
 				success: true,

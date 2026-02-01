@@ -15,7 +15,7 @@ export async function Nav() {
 
   return (
     <header className="border-b fixed top-0 left-0 right-0 z-50 border-white/10 bg-background">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-4">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-0">
         <Logo />
 
         <div className="flex items-center gap-6">
