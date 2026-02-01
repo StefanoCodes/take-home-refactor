@@ -22,3 +22,4 @@ export const getUserRoleOutputSchema = z.union([
  */
 
 export type GetUserRoleOutput = z.infer<typeof getUserRoleOutputSchema>;
+export type UserRole = GetUserRoleOutput['role'];

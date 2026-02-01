@@ -158,7 +158,7 @@ router.post(
 // POST /api/ad-slots/:id/unbook - Reset ad slot to available (for testing)
 router.post("/:id/unbook", async (req: Request, res: Response) => {
 	try {
-		const { id } = req.params;
+		const id = getParam(req.params.id);
 
 		const updatedSlot = await prisma.adSlot.update({
 			where: { id },

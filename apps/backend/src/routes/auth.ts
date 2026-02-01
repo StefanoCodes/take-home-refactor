@@ -1,11 +1,10 @@
 import { Router, type Request, type Response, type IRouter } from "express";
-import { authenticate, type AuthRequest } from "../auth.js";
+import type { AuthRequest } from "../middleware/authenticate.js";
+import { authenticate } from "../middleware/authenticate.js";
 import { prisma } from "../db.js";
+import { getParam } from "../utils/helpers.js";
 
 const router: IRouter = Router();
-
-// NOTE: Authentication is handled by Better Auth on the frontend
-// This route is kept for any backend-specific auth utilities
 
 // POST /api/auth/login - Placeholder (Better Auth handles login via frontend)
 router.post("/login", async (_req: Request, res: Response) => {
@@ -24,9 +23,7 @@ router.get("/me", authenticate, async (req: Request, res: Response) => {
 // GET /api/auth/role/:userId - Get user role based on Sponsor/Publisher records
 router.get("/role/:userId", async (req: Request, res: Response) => {
 	try {
-		const userId = Array.isArray(req.params.userId)
-			? req.params.userId[0]
-			: req.params.userId;
+		const userId = getParam(req.params.userId);
 
 		// Check if user is a sponsor
 		const sponsor = await prisma.sponsor.findUnique({

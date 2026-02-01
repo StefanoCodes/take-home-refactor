@@ -1,7 +1,9 @@
-import { redirect } from 'next/navigation';
-import { getUserRole } from '@/lib/data-access/auth/get-user-role';
-import { AdSlotList } from '../../../../components/dashboard/publisher/ad-slot-list';
+import { Suspense } from 'react';
+import { AdSlotGrid } from '@/components/dashboard/publisher/ad-slot-grid';
+import { AdSlotGridSkeleton } from '@/components/dashboard/publisher/ad-slot-grid-skeleton';
 import { isAuthenticated } from '@/lib/auth-helpers.server';
+import { getUserRole } from '@/lib/data-access/auth/get-user-role';
+import { redirect } from 'next/navigation';
 
 export default async function PublisherDashboard() {
   const { user } = await isAuthenticated();
@@ -10,8 +12,8 @@ export default async function PublisherDashboard() {
     return redirect('/login');
   }
 
-  // Verify user has 'publisher' role
   const roleData = await getUserRole(user.id);
+
   if (roleData.role !== 'publisher') {
     return redirect('/');
   }
@@ -23,7 +25,9 @@ export default async function PublisherDashboard() {
         {/* TODO: Add CreateAdSlotButton here */}
       </div>
 
-      <AdSlotList />
+      <Suspense fallback={<AdSlotGridSkeleton />}>
+        <AdSlotGrid publisherId={roleData.publisherId} />
+      </Suspense>
     </div>
   );
 }

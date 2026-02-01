@@ -1,17 +1,4 @@
-'use client';
-
-interface CampaignCardProps {
-  campaign: {
-    id: string;
-    name: string;
-    description?: string;
-    budget: number;
-    spent: number;
-    status: string;
-    startDate: string;
-    endDate: string;
-  };
-}
+import type { CampaignListItem } from '@anvara/schemas';
 
 const statusColors: Record<string, string> = {
   DRAFT: 'bg-gray-100 text-gray-600',
@@ -20,7 +7,7 @@ const statusColors: Record<string, string> = {
   COMPLETED: 'bg-blue-100 text-blue-700',
 };
 
-export function CampaignCard({ campaign }: CampaignCardProps) {
+export function CampaignCard({ campaign }: { campaign: CampaignListItem }) {
   const progress =
     campaign.budget > 0 ? (Number(campaign.spent) / Number(campaign.budget)) * 100 : 0;
 
@@ -58,8 +45,6 @@ export function CampaignCard({ campaign }: CampaignCardProps) {
         {new Date(campaign.startDate).toLocaleDateString()} -{' '}
         {new Date(campaign.endDate).toLocaleDateString()}
       </div>
-
-      {/* TODO: Add edit/view buttons */}
     </div>
   );
 }

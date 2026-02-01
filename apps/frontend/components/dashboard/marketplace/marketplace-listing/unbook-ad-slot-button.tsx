@@ -36,9 +36,12 @@ export function UnbookAdSlotButton({ adSlotId, label = 'Reset listing', classNam
 
   return (
     <button
+      type="button"
       onClick={handleUnbook}
       disabled={isPending}
-      className={className ?? 'text-sm text-[--color-primary] underline hover:opacity-80 disabled:opacity-50'}
+      className={
+        className ?? 'text-sm text-[--color-primary] underline hover:opacity-80 disabled:opacity-50'
+      }
     >
       {isPending ? 'Resetting...' : label}
     </button>

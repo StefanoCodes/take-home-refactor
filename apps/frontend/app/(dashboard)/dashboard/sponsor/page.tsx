@@ -1,4 +1,6 @@
-import { CampaignList } from '@/components/dashboard/sponsor/campaign-list';
+import { Suspense } from 'react';
+import { CampaignGrid } from '@/components/dashboard/sponsor/campaign-grid';
+import { CampaignGridSkeleton } from '@/components/dashboard/sponsor/campaign-grid-skeleton';
 import { isAuthenticated } from '@/lib/auth-helpers.server';
 import { getUserRole } from '@/lib/data-access/auth/get-user-role';
 import { redirect } from 'next/navigation';
@@ -10,8 +12,8 @@ export default async function SponsorDashboard() {
     return redirect('/login');
   }
 
-  // Verify user has 'sponsor' role
   const roleData = await getUserRole(user.id);
+
   if (roleData.role !== 'sponsor') {
     return redirect('/');
   }
@@ -23,7 +25,9 @@ export default async function SponsorDashboard() {
         {/* TODO: Add CreateCampaignButton here */}
       </div>
 
-      <CampaignList />
+      <Suspense fallback={<CampaignGridSkeleton />}>
+        <CampaignGrid sponsorId={roleData.sponsorId} />
+      </Suspense>
     </div>
   );
 }

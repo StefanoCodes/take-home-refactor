@@ -1,3 +1,4 @@
+import type { AdSlotType } from '@anvara/schemas';
 import type React from 'react';
 import { cn } from '@/lib/utils';
 
@@ -40,15 +41,16 @@ export function AdSlotDetailHeader({ children, className, ...props }: AdSlotDeta
   );
 }
 
-const typeColors: Record<string, string> = {
+const typeColors: Record<AdSlotType, string> = {
   DISPLAY: 'bg-blue-100 text-blue-700',
   VIDEO: 'bg-red-100 text-red-700',
+  NATIVE: 'bg-green-100 text-green-700',
   NEWSLETTER: 'bg-purple-100 text-purple-700',
   PODCAST: 'bg-orange-100 text-orange-700',
 };
 
 interface AdSlotDetailTypeBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  type: string;
+  type: AdSlotType;
 }
 
 export function AdSlotDetailTypeBadge({ type, className, ...props }: AdSlotDetailTypeBadgeProps) {

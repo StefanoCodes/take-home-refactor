@@ -5,14 +5,20 @@ import { getUserRole } from '@/lib/data-access/auth/get-user-role';
 
 export default async function LoginPage() {
   const { user } = await isAuthenticated();
-
+  // if the user is already logged in, we just redirect them to the dashboard (middleware also catches this this si a second layer of defense)
   if (user) {
     const { role } = await getUserRole(user.id);
-    if (role === 'sponsor') {
+    const isSponsor = role === 'sponsor';
+    const isPublisher = role === 'publisher';
+
+    if (isSponsor) {
       return redirect('/dashboard/sponsor');
-    } else if (role === 'publisher') {
+    }
+
+    if (isPublisher) {
       return redirect('/dashboard/publisher');
     }
+
     return redirect('/');
   }
 

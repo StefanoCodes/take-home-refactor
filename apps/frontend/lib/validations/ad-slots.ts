@@ -1,9 +1,9 @@
 import { z } from "zod";
+import { bookAdSlotInputSchema } from "@anvara/schemas";
 
-export const bookAdSlotSchema = z.object({
+// Extends the shared schema with `adSlotId` (sent as a URL param, not in the API body)
+export const bookAdSlotSchema = bookAdSlotInputSchema.extend({
 	adSlotId: z.string().min(1),
-	sponsorId: z.string().min(1),
-	message: z.string().optional(),
 });
 
 export type BookAdSlotSchemaType = z.infer<typeof bookAdSlotSchema>;

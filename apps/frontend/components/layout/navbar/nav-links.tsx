@@ -1,9 +1,8 @@
 'use client';
 
+import type { UserRole } from '@anvara/schemas';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-type UserRole = 'sponsor' | 'publisher' | null;
 
 const sharedLinks = [{ href: '/marketplace', label: 'Marketplace' }] as const;
 

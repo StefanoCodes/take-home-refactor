@@ -57,6 +57,7 @@ import { getDashboardStatsOutputSchema } from "@anvara/schemas";
 import { getHealthOutputSchema } from "@anvara/schemas";
 
 // Auth
+import { getMeOutputSchema } from "@anvara/schemas";
 import { getUserRoleOutputSchema } from "@anvara/schemas";
 
 export const $fetch = createFetch({
@@ -85,6 +86,9 @@ export const $fetch = createFetch({
 		},
 
 		// Auth
+		"@get/api/auth/me": {
+			output: getMeOutputSchema,
+		},
 		"@get/api/auth/role/:userId": {
 			output: getUserRoleOutputSchema,
 		},
