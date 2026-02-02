@@ -7,11 +7,7 @@ import {
 import { prisma } from "../db.js";
 import { validateBody } from "../middleware/validate.js";
 import { requireAuth, type AuthRequest } from "../middleware/authenticate.js";
-import {
-	getOwnedPublisher,
-	isPublisherOwner,
-	isSponsorOwner,
-} from "../middleware/authorize.js";
+import { isPublisherOwner, isSponsorOwner } from "../middleware/authorize.js";
 import { getParam, sendError } from "../utils/helpers.js";
 
 const router: IRouter = Router();
@@ -45,7 +41,12 @@ router.get("/", async (req: Request, res: Response) => {
 				where,
 				include: {
 					publisher: {
-						select: { id: true, name: true, category: true, monthlyViews: true },
+						select: {
+							id: true,
+							name: true,
+							category: true,
+							monthlyViews: true,
+						},
 					},
 					_count: { select: { placements: true } },
 				},

@@ -315,3 +315,40 @@ The grid then composes these pieces and passes only the data each piece needs. N
 **Reuse without prop drilling** — The same primitives are reused in different contexts. The publisher dashboard uses `AdSlotCardRoot`, `AdSlotCardHeader`, `AdSlotCardTypeBadge`, and `AdSlotCardFooter` inside `AdSlotCardWithActions`, which adds edit/delete buttons and dialogs. The card building blocks stay dumb and presentational; the “with actions” wrapper owns client state and callbacks. No need to pass action handlers or modal state down through a generic card component.
 
 The sponsor dashboard follows the same pattern: `CampaignCardRoot`, `CampaignCardHeader`, `CampaignCardTitle`, `CampaignCardStatusBadge`, `CampaignCardDescription`, `CampaignCardBudget`, `CampaignCardDateRange` are composed in both read-only views and in `CampaignCardWithActions`. Each primitive receives only the props it needs (e.g. `status`, `spent`, `budget`), and the parent arranges them. That keeps components small, testable, and easy to change without touching unrelated code.
+
+---
+
+## Challenges Completed
+
+### Core Challenges
+
+| # | Challenge | Difficulty | Status |
+|---|-----------|------------|--------|
+| 1 | **Fix TypeScript Errors** — Replaced `any` types with proper types, removed unused variables, fixed schema mismatches. `pnpm typecheck` passes cleanly. | Easy | Done |
+| 2 | **Server-Side Data Fetching** — Converted client-side `useEffect` fetching to Next.js Server Components. Data is fetched on the server via the data access layer and passed as props. | Medium | Done |
+| 3 | **Secure API Endpoints** — Implemented Express authentication middleware that validates Better Auth sessions. Returns `401` for unauthenticated requests and `403` when users try to access other users' data. User-scoped data access across all campaign and ad slot routes. | Hard | Done |
+| 4 | **CRUD Operations** — Completed all missing API endpoints: `PUT /api/campaigns/:id`, `DELETE /api/campaigns/:id`, `POST /api/ad-slots`, `PUT /api/ad-slots/:id`, `DELETE /api/ad-slots/:id`, plus `PUT /api/sponsors/:id`. All endpoints validate input, verify ownership, and return proper HTTP status codes. | Medium | Done |
+| 5 | **Dashboards with Server Actions** — Built fully functional publisher and sponsor dashboards. All mutations (create, edit, delete) use Server Actions with `next-safe-action`. Forms use `useFormStatus` for pending states, `revalidatePath` for cache invalidation, and Zod validation at every layer. | Hard | Done |
+
+### Bonus Challenges
+
+**Business:**
+
+- **Improve Marketplace Conversions** — The marketplace has server-side pagination with bookmarkable URLs, type filtering, availability filtering, and a detail page with clear CTAs to book or request a quote.
+- **Newsletter Signup** — Full implementation with a public newsletter signup form on the landing page, backend route with upsert to handle duplicates, and Zod validation via the shared schemas package.
+- **Request Quote Feature** — Sponsors can request custom quotes for ad slots. Publishers can view incoming quote requests and update their status (PENDING, RESPONDED, ACCEPTED, DECLINED). Full backend routes, schemas, server actions, and UI.
+
+**Design:**
+
+- **Marketing Landing Page** — Built a full landing page with hero, features grid, how-it-works steps, audience sections, newsletter signup, and final CTA.
+- **Dashboard UI/UX Improvements** — Compound component architecture for cards, consistent layout, Sonner toast notifications for action feedback, and clear visual hierarchy.
+- **Animations & Polish** — Motion library for page transitions and micro-interactions. Loading spinners positioned on the right side of buttons during pending actions. Fixed CLS (Cumulative Layout Shift) on the navbar, logo, and modals.
+- **Mobile Experience** — Responsive grid layouts across the marketplace, publisher dashboard, and sponsor dashboard. Responsive marketing page sections.
+- **Error & Empty States** — Skeleton loading states for the marketplace grid, campaign grid, and ad slot grid. Error handling with user-facing messages via toast notifications.
+- **Add Pagination** — Server-side pagination on the marketplace with search params to persist state and make URLs bookmarkable. Backend support for limit/offset pagination.
+
+---
+
+## Reviewer Tip
+
+It is nice to run the frontend and backend in two split terminals side by side. The frontend logs server action invocations with structured metadata (action name, execution time, input payload) via the `next-safe-action` logging middleware, and the backend logs incoming requests with route and status information. Having both visible at the same time makes it easy to trace a user action from the browser through the server action to the API endpoint and back. This setup gives a good developer experience and makes debugging straightforward — you can see exactly what is happening at each layer as you click through the app.

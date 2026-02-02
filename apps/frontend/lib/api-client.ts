@@ -58,6 +58,22 @@ import { getDashboardStatsOutputSchema } from "@anvara/schemas";
 // Health
 import { getHealthOutputSchema } from "@anvara/schemas";
 
+// Newsletter
+import {
+	subscribeNewsletterInputSchema,
+	subscribeNewsletterOutputSchema,
+} from "@anvara/schemas";
+
+// Quotes
+import {
+	requestQuoteInputSchema,
+	requestQuoteOutputSchema,
+	listUserQuotesOutputSchema,
+	listPublisherQuotesOutputSchema,
+	updateQuoteStatusInputSchema,
+	updateQuoteStatusOutputSchema,
+} from "@anvara/schemas";
+
 // Auth
 import { getMeOutputSchema } from "@anvara/schemas";
 import { getUserRoleOutputSchema } from "@anvara/schemas";
@@ -197,6 +213,28 @@ export const $fetch = createFetch({
 		// Dashboard
 		"@get/api/dashboard/stats": {
 			output: getDashboardStatsOutputSchema,
+		},
+
+		// Newsletter
+		"@post/api/newsletter": {
+			input: subscribeNewsletterInputSchema,
+			output: subscribeNewsletterOutputSchema,
+		},
+
+		// Quotes
+		"@get/api/quotes": {
+			output: listPublisherQuotesOutputSchema,
+		},
+		"@get/api/quotes/mine": {
+			output: listUserQuotesOutputSchema,
+		},
+		"@post/api/quotes": {
+			input: requestQuoteInputSchema,
+			output: requestQuoteOutputSchema,
+		},
+		"@patch/api/quotes/:id/status": {
+			input: updateQuoteStatusInputSchema,
+			output: updateQuoteStatusOutputSchema,
 		},
 	}),
 	plugins: [

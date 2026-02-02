@@ -3,6 +3,7 @@ import { Audiences } from '@/components/marketing/audiences';
 import { Features } from '@/components/marketing/features';
 import { Hero } from '@/components/marketing/hero';
 import { HowItWorks } from '@/components/marketing/how-it-works';
+import { NewsletterSignup } from '@/components/marketing/newsletter-signup';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function Home() {
       <Features />
       <HowItWorks />
       <Audiences />
+      <NewsletterSignup />
       <FinalCta />
     </>
   );

@@ -8,9 +8,12 @@ import { motion } from 'motion/react';
 
 const sharedLinks = [{ href: '/marketplace', label: 'Marketplace' }] as const;
 
-const roleLinks: Record<string, { href: string; label: string }> = {
-  sponsor: { href: '/dashboard/sponsor', label: 'My Campaigns' },
-  publisher: { href: '/dashboard/publisher', label: 'My Ad Slots' },
+const roleLinks: Record<string, { href: string; label: string }[]> = {
+  sponsor: [{ href: '/dashboard/sponsor', label: 'My Campaigns' }],
+  publisher: [
+    { href: '/dashboard/publisher', label: 'My Ad Slots' },
+    { href: '/dashboard/publisher/quotes', label: 'Quote Requests' },
+  ],
 };
 
 export function NavLinks({ role }: { role: UserRole }) {
@@ -19,7 +22,7 @@ export function NavLinks({ role }: { role: UserRole }) {
 
   const allLinks = [
     ...sharedLinks,
-    ...(role && roleLinks[role] ? [roleLinks[role]] : []),
+    ...(role && roleLinks[role] ? roleLinks[role] : []),
   ];
 
   const activeHref = hoveredHref ?? allLinks.find((l) => pathname === l.href)?.href ?? null;

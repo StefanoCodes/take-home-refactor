@@ -7,3 +7,5 @@ export * from './placements';
 export * from './dashboard';
 export * from './health';
 export * from './auth';
+export * from './newsletter';
+export * from './quotes';

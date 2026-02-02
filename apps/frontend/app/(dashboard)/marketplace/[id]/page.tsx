@@ -1,6 +1,7 @@
 import { isAuthenticated } from '@/lib/auth-helpers.server';
 import { getAdSlot } from '@/lib/data-access-layer/ad-slots/get-ad-slot';
 import { getUserRole } from '@/lib/data-access-layer/auth/get-user-role';
+import { getUserQuoteForSlot } from '@/lib/data-access-layer/quotes/get-user-quote-for-slot';
 import {
   AdSlotDetailRoot,
   AdSlotDetailCard,
@@ -10,6 +11,7 @@ import {
   AdSlotDetailSection,
 } from '@/components/dashboard/marketplace/marketplace-listing/ad-slot-detail';
 import { BookAdSlotForm } from '@/components/dashboard/marketplace/marketplace-listing/book-ad-slot-form';
+import { RequestQuoteButton } from '@/components/dashboard/marketplace/marketplace-listing/request-quote-form';
 import { UnbookAdSlotButton } from '@/components/dashboard/marketplace/marketplace-listing/unbook-ad-slot-button';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
@@ -27,7 +29,11 @@ export default async function AdSlotPage({ params }: Props) {
 
   const { id } = await params;
 
-  const [adSlot, roleInfo] = await Promise.all([getAdSlot(id), getUserRole(user.id)]);
+  const [adSlot, roleInfo, existingQuote] = await Promise.all([
+    getAdSlot(id),
+    getUserRole(user.id),
+    getUserQuoteForSlot(id),
+  ]);
 
   if (!adSlot) {
     return (
@@ -121,26 +127,18 @@ export default async function AdSlotPage({ params }: Props) {
             </h2>
 
             {isSponsor && (
-              <BookAdSlotForm
-                adSlotId={adSlot.id}
-                sponsorId={roleInfo.sponsorId}
-                sponsorName={roleInfo.name ?? user.name}
-              />
+              <div className="space-y-3">
+                <BookAdSlotForm
+                  adSlotId={adSlot.id}
+                  sponsorId={roleInfo.sponsorId}
+                  sponsorName={roleInfo.name ?? user.name}
+                />
+                <RequestQuoteButton adSlotId={adSlot.id} userEmail={user.email} existingQuote={existingQuote} />
+              </div>
             )}
 
             {!isSponsor && (
-              <div>
-                <button
-                  type="button"
-                  disabled
-                  className="w-full cursor-not-allowed rounded-xl bg-white/[0.05] px-4 py-3 font-semibold text-white/25 ring-1 ring-white/[0.06]"
-                >
-                  Request This Placement
-                </button>
-                <p className="mt-3 text-center text-sm text-white/30">
-                  Only sponsors can request placements
-                </p>
-              </div>
+              <RequestQuoteButton adSlotId={adSlot.id} userEmail={user.email} existingQuote={existingQuote} />
             )}
           </AdSlotDetailSection>
         )}
