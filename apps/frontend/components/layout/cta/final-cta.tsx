@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 
 export function FinalCta() {
   return (
-    <section className="relative mx-auto w-full max-w-6xl px-6 py-32">
+    <section className="relative mx-auto w-full max-w-6xl overflow-hidden px-6 py-32">
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <div className="h-[400px] w-[600px] rounded-full bg-blue-500/[0.03] blur-[100px]" />
       </div>

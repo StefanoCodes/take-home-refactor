@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-[75vh] flex-col items-center justify-center px-6 pt-12 text-center">
+    <section className="relative flex min-h-[75vh] flex-col items-center justify-center overflow-hidden px-6 pt-12 text-center">
       {/* Ambient glow */}
       <div className="pointer-events-none absolute top-1/4 left-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/[0.12] blur-[120px] dark:bg-blue-500/[0.04]" />
 
