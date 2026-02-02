@@ -6,13 +6,13 @@ export { createCampaignInputSchema, updateCampaignInputSchema };
 export type CreateCampaignSchemaType = z.infer<typeof createCampaignInputSchema>;
 
 export const updateCampaignFormSchema = updateCampaignInputSchema.extend({
-  campaignId: z.string().min(1),
+  campaignId: z.string().min(1, { message: 'Campaign ID is required' }),
 });
 
 export type UpdateCampaignFormSchemaType = z.infer<typeof updateCampaignFormSchema>;
 
 export const deleteCampaignSchema = z.object({
-  campaignId: z.string().min(1),
+  campaignId: z.string().min(1, { message: 'Campaign ID is required' }),
 });
 
 export type DeleteCampaignSchemaType = z.infer<typeof deleteCampaignSchema>;

@@ -23,11 +23,11 @@ export const quoteRequestSchema = z.object({
 
 // POST /api/quotes
 export const requestQuoteInputSchema = z.object({
-	companyName: z.string().min(1),
-	email: z.string().email(),
+	companyName: z.string().min(1, { message: 'Company name is required' }),
+	email: z.string().min(1, { message: 'Email is required' }).email({ message: 'Please enter a valid email address' }),
 	phone: z.string().optional(),
 	message: z.string().optional(),
-	adSlotId: z.string().min(1),
+	adSlotId: z.string().min(1, { message: 'Ad slot is required' }),
 });
 
 export const requestQuoteOutputSchema = successResponseSchema.extend({

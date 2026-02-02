@@ -38,7 +38,7 @@ function SelectTrigger({
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <ChevronDownIcon className="size-4 text-white" />
+        <ChevronDownIcon className="size-4 text-black dark:text-white" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );

@@ -3,7 +3,7 @@ import { adSlotTypeSchema, successResponseSchema } from '../common';
 
 // POST /api/ad-slots/:id/book
 export const bookAdSlotInputSchema = z.object({
-  sponsorId: z.string().min(1),
+  sponsorId: z.string().min(1, { message: 'Sponsor ID is required' }),
   message: z.string().optional(),
 });
 

@@ -345,6 +345,10 @@ The sponsor dashboard follows the same pattern: `CampaignCardRoot`, `CampaignCar
 - **Error & Empty States** — Skeleton loading states for the marketplace grid, campaign grid, and ad slot grid. Error handling with user-facing messages via toast notifications.
 - **Add Pagination** — Server-side pagination on the marketplace with search params to persist state and make URLs bookmarkable. Backend support for limit/offset pagination.
 
+**Analytics:**
+
+- **Google Analytics Setup** — GA4 integrated at the root layout level using `@next/third-parties/google` with Google Tag Manager for page view tracking and event collection.
+
 ---
 
 ## Reviewer Tip

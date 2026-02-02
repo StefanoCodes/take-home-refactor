@@ -3,10 +3,10 @@ import { adSlotTypeSchema } from "../common";
 
 // PUT /api/ad-slots/:id
 export const updateAdSlotInputSchema = z.object({
-	name: z.string().min(1).optional(),
+	name: z.string().min(1, { message: 'Ad slot name is required' }).optional(),
 	description: z.string().optional(),
 	type: adSlotTypeSchema.optional(),
-	basePrice: z.coerce.number().positive().optional(),
+	basePrice: z.coerce.number().positive({ message: 'Base price must be greater than 0' }).optional(),
 	isAvailable: z.boolean().optional(),
 });
 

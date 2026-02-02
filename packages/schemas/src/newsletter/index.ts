@@ -3,7 +3,7 @@ import { successResponseSchema } from '../common';
 
 // POST /api/newsletter
 export const subscribeNewsletterInputSchema = z.object({
-	email: z.string().email(),
+	email: z.string().min(1, { message: 'Email is required' }).email({ message: 'Please enter a valid email address' }),
 });
 
 export const subscribeNewsletterOutputSchema = successResponseSchema.extend({

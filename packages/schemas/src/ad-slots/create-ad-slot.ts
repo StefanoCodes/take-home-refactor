@@ -3,11 +3,11 @@ import { adSlotTypeSchema } from '../common';
 
 // POST /api/ad-slots
 export const createAdSlotInputSchema = z.object({
-  name: z.string().min(1),
+  name: z.string().min(1, { message: 'Ad slot name is required' }),
   description: z.string().optional(),
   type: adSlotTypeSchema,
-  basePrice: z.number().positive(),
-  publisherId: z.string().min(1),
+  basePrice: z.number({ required_error: 'Base price is required' }).positive({ message: 'Base price must be greater than 0' }),
+  publisherId: z.string().min(1, { message: 'Publisher ID is required' }),
 });
 
 export const createAdSlotOutputSchema = z.object({
