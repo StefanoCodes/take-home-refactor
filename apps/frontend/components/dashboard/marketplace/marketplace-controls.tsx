@@ -1,28 +1,28 @@
-"use client";
+'use client';
 
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { useCallback } from "react";
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { useCallback } from 'react';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Pagination } from "@/components/ui/pagination";
+} from '@/components/ui/select';
+import { Pagination } from '@/components/ui/pagination';
 
 const AD_SLOT_TYPES = [
-  { value: "all", label: "All Types" },
-  { value: "DISPLAY", label: "Display" },
-  { value: "VIDEO", label: "Video" },
-  { value: "NATIVE", label: "Native" },
-  { value: "NEWSLETTER", label: "Newsletter" },
-  { value: "PODCAST", label: "Podcast" },
+  { value: 'all', label: 'All Types' },
+  { value: 'DISPLAY', label: 'Display' },
+  { value: 'VIDEO', label: 'Video' },
+  { value: 'NATIVE', label: 'Native' },
+  { value: 'NEWSLETTER', label: 'Newsletter' },
+  { value: 'PODCAST', label: 'Podcast' },
 ] as const;
 
 const AVAILABILITY_OPTIONS = [
-  { value: "all", label: "All Slots" },
-  { value: "true", label: "Available Only" },
+  { value: 'all', label: 'All Slots' },
+  { value: 'true', label: 'Available Only' },
 ] as const;
 
 interface MarketplaceFiltersProps {
@@ -38,13 +38,13 @@ export function MarketplaceFilters({ type, available }: MarketplaceFiltersProps)
   const updateParams = useCallback(
     (key: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString());
-      if (value === "all" || !value) {
+      if (value === 'all' || !value) {
         params.delete(key);
       } else {
         params.set(key, value);
       }
       // Reset to page 1 when filters change
-      params.delete("page");
+      params.delete('page');
       router.push(`${pathname}?${params.toString()}`);
     },
     [router, pathname, searchParams]
@@ -52,10 +52,7 @@ export function MarketplaceFilters({ type, available }: MarketplaceFiltersProps)
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <Select
-        value={type || "all"}
-        onValueChange={(value) => updateParams("type", value)}
-      >
+      <Select value={type || 'all'} onValueChange={(value) => updateParams('type', value)}>
         <SelectTrigger className="w-[160px] border-border bg-muted text-foreground">
           <SelectValue placeholder="Slot Type" />
         </SelectTrigger>
@@ -69,8 +66,8 @@ export function MarketplaceFilters({ type, available }: MarketplaceFiltersProps)
       </Select>
 
       <Select
-        value={available || "all"}
-        onValueChange={(value) => updateParams("available", value)}
+        value={available || 'all'}
+        onValueChange={(value) => updateParams('available', value)}
       >
         <SelectTrigger className="w-[170px] border-border bg-muted text-foreground">
           <SelectValue placeholder="Availability" />

@@ -1,5 +1,5 @@
-import { subscribeNewsletterInputSchema } from "@anvara/schemas";
-import { z } from "zod";
+import { subscribeNewsletterInputSchema } from '@anvara/schemas';
+import { z } from 'zod';
 
 export { subscribeNewsletterInputSchema };
 

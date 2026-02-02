@@ -5,7 +5,7 @@ function Card({ className, ...props }: React.ComponentProps<'div'>) {
     <div
       className={cn(
         'rounded-2xl border border-border bg-gradient-to-b from-foreground/[0.03] to-transparent p-5 shadow-sm dark:primary-card-shadow',
-        className,
+        className
       )}
       {...props}
     />
@@ -13,12 +13,7 @@ function Card({ className, ...props }: React.ComponentProps<'div'>) {
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
-  return (
-    <div
-      className={cn('mb-3 flex items-start justify-between', className)}
-      {...props}
-    />
-  );
+  return <div className={cn('mb-3 flex items-start justify-between', className)} {...props} />;
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
@@ -26,12 +21,7 @@ function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {
-  return (
-    <div
-      className={cn('flex items-center justify-between', className)}
-      {...props}
-    />
-  );
+  return <div className={cn('flex items-center justify-between', className)} {...props} />;
 }
 
 function CardTitle({ className, ...props }: React.ComponentProps<'h3'>) {
@@ -39,9 +29,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<'h3'>) {
 }
 
 function CardDescription({ className, ...props }: React.ComponentProps<'p'>) {
-  return (
-    <p className={cn('text-sm text-text-muted', className)} {...props} />
-  );
+  return <p className={cn('text-sm text-text-muted', className)} {...props} />;
 }
 
 export { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription };

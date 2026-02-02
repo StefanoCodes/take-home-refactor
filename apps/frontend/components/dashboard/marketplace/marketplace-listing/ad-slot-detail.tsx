@@ -65,10 +65,7 @@ interface AdSlotDetailFooterProps extends React.HTMLAttributes<HTMLDivElement> {
 export function AdSlotDetailFooter({ children, className, ...props }: AdSlotDetailFooterProps) {
   return (
     <div
-      className={cn(
-        'flex items-center justify-between border-t border-border pt-5',
-        className
-      )}
+      className={cn('flex items-center justify-between border-t border-border pt-5', className)}
       {...props}
     >
       {children}

@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 
 export function LogoutButton() {
   const router = useRouter();
-  const [_prevState, formAction, isPending] = useActionState(async () => {
+  const [, formAction, isPending] = useActionState(async () => {
     const result = await logoutAction();
     const { data: payload, serverError } = result;
 

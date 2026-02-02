@@ -38,7 +38,12 @@ export function Button({
 }: ButtonProps) {
   const Comp = asChild ? Slot : 'button';
   return (
-    <Comp ref={ref} type="button" className={cn(buttonVariants({ size, variant }), className)} {...props}>
+    <Comp
+      ref={ref}
+      type="button"
+      className={cn(buttonVariants({ size, variant }), className)}
+      {...props}
+    >
       {children}
     </Comp>
   );

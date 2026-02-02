@@ -1,26 +1,26 @@
-import "server-only";
-import { betterAuth } from "better-auth";
-import { Pool } from "pg";
-import { nextCookies } from "better-auth/next-js";
+import 'server-only';
+import { betterAuth } from 'better-auth';
+import { Pool } from 'pg';
+import { nextCookies } from 'better-auth/next-js';
 
 const connectionString = process.env.DATABASE_URL!;
 
 if (!connectionString) {
-	throw new Error("DATABASE_URL environment variable is required");
+  throw new Error('DATABASE_URL environment variable is required');
 }
 
 export const auth = betterAuth({
-	database: new Pool({ connectionString }),
-	secret: process.env.BETTER_AUTH_SECRET || "fallback-secret-for-dev",
-	baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3847",
-	emailAndPassword: {
-		enabled: true,
-		minPasswordLength: 6,
-	},
-	plugins: [nextCookies()],
-	advanced: {
-		disableCSRFCheck: true,
-	},
+  database: new Pool({ connectionString }),
+  secret: process.env.BETTER_AUTH_SECRET || 'fallback-secret-for-dev',
+  baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:3847',
+  emailAndPassword: {
+    enabled: true,
+    minPasswordLength: 6,
+  },
+  plugins: [nextCookies()],
+  advanced: {
+    disableCSRFCheck: true,
+  },
 });
 
 export type Session = typeof auth.$Infer.Session.session;

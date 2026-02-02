@@ -20,18 +20,12 @@ export function NavLinks({ role }: { role: UserRole }) {
   const pathname = usePathname();
   const [hoveredHref, setHoveredHref] = useState<string | null>(null);
 
-  const allLinks = [
-    ...sharedLinks,
-    ...(role && roleLinks[role] ? roleLinks[role] : []),
-  ];
+  const allLinks = [...sharedLinks, ...(role && roleLinks[role] ? roleLinks[role] : [])];
 
   const activeHref = hoveredHref ?? allLinks.find((l) => pathname === l.href)?.href ?? null;
 
   return (
-    <div
-      className="flex items-center gap-1"
-      onMouseLeave={() => setHoveredHref(null)}
-    >
+    <div className="flex items-center gap-1" onMouseLeave={() => setHoveredHref(null)}>
       {allLinks.map((link) => {
         const isActive = link.href === activeHref;
         const isCurrentRoute = pathname === link.href;
@@ -56,9 +50,7 @@ export function NavLinks({ role }: { role: UserRole }) {
             )}
             <span
               className={`relative z-10 ${
-                isCurrentRoute
-                  ? 'font-medium text-brand-primary'
-                  : 'text-text-muted'
+                isCurrentRoute ? 'font-medium text-brand-primary' : 'text-text-muted'
               }`}
             >
               {link.label}

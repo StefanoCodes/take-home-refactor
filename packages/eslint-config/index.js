@@ -55,6 +55,7 @@ export const reactConfig = [
       },
       globals: {
         ...globals.browser,
+        ...globals.node,
         ...globals.es2022,
       },
     },
@@ -66,6 +67,9 @@ export const reactConfig = [
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'error',
       'no-console': 'warn',
+      // Disable no-undef for TypeScript files — the TS compiler handles this
+      // more accurately and understands type-level references like React.* types
+      'no-undef': 'off',
     },
   },
   {

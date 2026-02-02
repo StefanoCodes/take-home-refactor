@@ -24,10 +24,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { requestQuoteAction } from '@/lib/server-actions/quotes/request-quote';
-import {
-  requestQuoteInputSchema,
-  type RequestQuoteSchemaType,
-} from '@/lib/validations/quotes';
+import { requestQuoteInputSchema, type RequestQuoteSchemaType } from '@/lib/validations/quotes';
 import type { QuoteRequest } from '@anvara/schemas';
 import { Clock } from 'lucide-react';
 
@@ -57,11 +54,7 @@ export function RequestQuoteButton({ adSlotId, userEmail, existingQuote }: Props
   if (existingQuote) {
     return (
       <div className="space-y-2">
-        <Button
-          variant="secondary"
-          className="w-full rounded-xl px-4 py-3 font-semibold"
-          disabled
-        >
+        <Button variant="secondary" className="w-full rounded-xl px-4 py-3 font-semibold" disabled>
           <Clock className="mr-2 size-4" />
           Quote Requested
         </Button>
@@ -93,10 +86,7 @@ export function RequestQuoteButton({ adSlotId, userEmail, existingQuote }: Props
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="secondary"
-          className="w-full rounded-xl px-4 py-3 font-semibold"
-        >
+        <Button variant="secondary" className="w-full rounded-xl px-4 py-3 font-semibold">
           Request a Quote
         </Button>
       </DialogTrigger>

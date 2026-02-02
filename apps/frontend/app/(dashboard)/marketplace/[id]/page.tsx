@@ -133,12 +133,20 @@ export default async function AdSlotPage({ params }: Props) {
                   sponsorId={roleInfo.sponsorId}
                   sponsorName={roleInfo.name ?? user.name}
                 />
-                <RequestQuoteButton adSlotId={adSlot.id} userEmail={user.email} existingQuote={existingQuote} />
+                <RequestQuoteButton
+                  adSlotId={adSlot.id}
+                  userEmail={user.email}
+                  existingQuote={existingQuote}
+                />
               </div>
             )}
 
             {!isSponsor && (
-              <RequestQuoteButton adSlotId={adSlot.id} userEmail={user.email} existingQuote={existingQuote} />
+              <RequestQuoteButton
+                adSlotId={adSlot.id}
+                userEmail={user.email}
+                existingQuote={existingQuote}
+              />
             )}
           </AdSlotDetailSection>
         )}

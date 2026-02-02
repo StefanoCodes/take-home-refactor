@@ -1,5 +1,5 @@
-import { requestQuoteInputSchema, updateQuoteStatusInputSchema } from "@anvara/schemas";
-import { z } from "zod";
+import { requestQuoteInputSchema, updateQuoteStatusInputSchema } from '@anvara/schemas';
+import { z } from 'zod';
 
 export { requestQuoteInputSchema, updateQuoteStatusInputSchema };
 

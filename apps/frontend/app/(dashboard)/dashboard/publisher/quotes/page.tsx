@@ -61,9 +61,7 @@ export default async function PublisherQuotesPage() {
             <TableBody>
               {quotes.map((quote) => (
                 <TableRow key={quote.id} className="border-border">
-                  <TableCell className="font-medium text-foreground">
-                    {quote.companyName}
-                  </TableCell>
+                  <TableCell className="font-medium text-foreground">{quote.companyName}</TableCell>
                   <TableCell>
                     <a
                       href={`mailto:${quote.email}`}
@@ -72,9 +70,7 @@ export default async function PublisherQuotesPage() {
                       {quote.email}
                     </a>
                   </TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {quote.adSlot.name}
-                  </TableCell>
+                  <TableCell className="text-muted-foreground">{quote.adSlot.name}</TableCell>
                   <TableCell>
                     <span
                       className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${statusStyles[quote.status] ?? 'bg-white/5 text-muted-foreground'}`}

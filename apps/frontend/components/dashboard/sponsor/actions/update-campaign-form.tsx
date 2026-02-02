@@ -12,11 +12,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   Select,
   SelectContent,
@@ -148,10 +144,7 @@ export function UpdateCampaignForm({ campaign, onSuccess }: Props) {
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
-                        <Button
-                          variant="secondary"
-                          className="w-full justify-start font-normal"
-                        >
+                        <Button variant="secondary" className="w-full justify-start font-normal">
                           {dateValue ? dateValue.toLocaleDateString() : 'Select date'}
                         </Button>
                       </FormControl>
@@ -184,10 +177,7 @@ export function UpdateCampaignForm({ campaign, onSuccess }: Props) {
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
-                        <Button
-                          variant="secondary"
-                          className="w-full justify-start font-normal"
-                        >
+                        <Button variant="secondary" className="w-full justify-start font-normal">
                           {dateValue ? dateValue.toLocaleDateString() : 'Select date'}
                         </Button>
                       </FormControl>
