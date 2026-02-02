@@ -60,7 +60,7 @@ export default async function AdSlotPage({ params }: Props) {
     <AdSlotDetailRoot className="flex flex-col gap-4">
       <Link
         href="/marketplace"
-        className="inline-flex items-center gap-1 text-sm text-white/40 transition-colors hover:text-white/70"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
         ← Back to Marketplace
       </Link>
@@ -68,9 +68,9 @@ export default async function AdSlotPage({ params }: Props) {
       <AdSlotDetailCard>
         <AdSlotDetailHeader>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-white/90">{adSlot.name}</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground">{adSlot.name}</h1>
             {hasPublisher && (
-              <p className="mt-1 text-white/40">
+              <p className="mt-1 text-muted-foreground">
                 by {adSlot.publisher.name}
                 {hasPublisherWebsite && (
                   <>
@@ -92,25 +92,25 @@ export default async function AdSlotPage({ params }: Props) {
         </AdSlotDetailHeader>
 
         {hasDescription && (
-          <p className="mb-6 leading-relaxed text-white/35">{adSlot.description}</p>
+          <p className="mb-6 leading-relaxed text-muted-foreground">{adSlot.description}</p>
         )}
 
         <AdSlotDetailFooter>
           <div>
             <span
-              className={`flex items-center gap-2 text-sm font-medium ${isAvailable ? 'text-emerald-400/90' : 'text-white/30'}`}
+              className={`flex items-center gap-2 text-sm font-medium ${isAvailable ? 'text-emerald-500 dark:text-emerald-400/90' : 'text-muted-foreground'}`}
             >
               <span
-                className={`inline-block h-2 w-2 rounded-full ${isAvailable ? 'bg-emerald-400' : 'bg-white/20'}`}
+                className={`inline-block h-2 w-2 rounded-full ${isAvailable ? 'bg-emerald-500 dark:bg-emerald-400' : 'bg-muted-foreground/30'}`}
               />
               {isAvailable ? 'Available' : 'Currently Booked'}
             </span>
           </div>
           <div className="text-right">
-            <p className="text-3xl font-bold tracking-tight text-white/85">
+            <p className="text-3xl font-bold tracking-tight text-foreground">
               ${adSlot.basePrice.toLocaleString()}
             </p>
-            <p className="text-sm text-white/35">per month</p>
+            <p className="text-sm text-muted-foreground">per month</p>
           </div>
         </AdSlotDetailFooter>
 
@@ -122,7 +122,7 @@ export default async function AdSlotPage({ params }: Props) {
 
         {isAvailable && (
           <AdSlotDetailSection>
-            <h2 className="mb-5 text-lg font-semibold tracking-tight text-white/80">
+            <h2 className="mb-5 text-lg font-semibold tracking-tight text-foreground">
               Request This Placement
             </h2>
 

@@ -23,7 +23,7 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto mt-10 rounded-lg border border-white/10 p-6 shadow-sm">
+    <div className="w-full max-w-md mx-auto mt-10 rounded-lg border border-border p-6 shadow-sm">
       <h1 className="mb-6 text-2xl font-bold">Login to Anvara</h1>
       <LoginForm />
     </div>

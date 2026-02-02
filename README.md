@@ -2,8 +2,6 @@
   <img src="https://anvara-production.nyc3.cdn.digitaloceanspaces.com/anvarabluetext.png" alt="Anvara" width="500" />
 </div>
 
-# Anvara Take-Home Test
-
 ## Architecture & Design Decisions
 
 ### Single Source of Truth: The `@anvara/schemas` Package
@@ -322,13 +320,13 @@ The sponsor dashboard follows the same pattern: `CampaignCardRoot`, `CampaignCar
 
 ### Core Challenges
 
-| # | Challenge | Difficulty | Status |
-|---|-----------|------------|--------|
-| 1 | **Fix TypeScript Errors** — Replaced `any` types with proper types, removed unused variables, fixed schema mismatches. `pnpm typecheck` passes cleanly. | Easy | Done |
-| 2 | **Server-Side Data Fetching** — Converted client-side `useEffect` fetching to Next.js Server Components. Data is fetched on the server via the data access layer and passed as props. | Medium | Done |
-| 3 | **Secure API Endpoints** — Implemented Express authentication middleware that validates Better Auth sessions. Returns `401` for unauthenticated requests and `403` when users try to access other users' data. User-scoped data access across all campaign and ad slot routes. | Hard | Done |
-| 4 | **CRUD Operations** — Completed all missing API endpoints: `PUT /api/campaigns/:id`, `DELETE /api/campaigns/:id`, `POST /api/ad-slots`, `PUT /api/ad-slots/:id`, `DELETE /api/ad-slots/:id`, plus `PUT /api/sponsors/:id`. All endpoints validate input, verify ownership, and return proper HTTP status codes. | Medium | Done |
-| 5 | **Dashboards with Server Actions** — Built fully functional publisher and sponsor dashboards. All mutations (create, edit, delete) use Server Actions with `next-safe-action`. Forms use `useFormStatus` for pending states, `revalidatePath` for cache invalidation, and Zod validation at every layer. | Hard | Done |
+| #   | Challenge                                                                                                                                                                                                                                                                                                       | Difficulty | Status |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------ |
+| 1   | **Fix TypeScript Errors** — Replaced `any` types with proper types, removed unused variables, fixed schema mismatches. `pnpm typecheck` passes cleanly.                                                                                                                                                         | Easy       | Done   |
+| 2   | **Server-Side Data Fetching** — Converted client-side `useEffect` fetching to Next.js Server Components. Data is fetched on the server via the data access layer and passed as props.                                                                                                                           | Medium     | Done   |
+| 3   | **Secure API Endpoints** — Implemented Express authentication middleware that validates Better Auth sessions. Returns `401` for unauthenticated requests and `403` when users try to access other users' data. User-scoped data access across all campaign and ad slot routes.                                  | Hard       | Done   |
+| 4   | **CRUD Operations** — Completed all missing API endpoints: `PUT /api/campaigns/:id`, `DELETE /api/campaigns/:id`, `POST /api/ad-slots`, `PUT /api/ad-slots/:id`, `DELETE /api/ad-slots/:id`, plus `PUT /api/sponsors/:id`. All endpoints validate input, verify ownership, and return proper HTTP status codes. | Medium     | Done   |
+| 5   | **Dashboards with Server Actions** — Built fully functional publisher and sponsor dashboards. All mutations (create, edit, delete) use Server Actions with `next-safe-action`. Forms use `useFormStatus` for pending states, `revalidatePath` for cache invalidation, and Zod validation at every layer.        | Hard       | Done   |
 
 ### Bonus Challenges
 

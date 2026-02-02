@@ -48,7 +48,7 @@ export function AdSlotDetailTypeBadge({ type, className, ...props }: AdSlotDetai
     <span
       className={cn(
         'rounded-full px-3.5 py-1 text-xs font-medium tracking-wide uppercase',
-        adSlotTypeColors[type] ?? 'bg-white/10 text-text-muted',
+        adSlotTypeColors[type] ?? 'bg-muted text-text-muted',
         className
       )}
       {...props}
@@ -66,7 +66,7 @@ export function AdSlotDetailFooter({ children, className, ...props }: AdSlotDeta
   return (
     <div
       className={cn(
-        'flex items-center justify-between border-t border-white/[0.06] pt-5',
+        'flex items-center justify-between border-t border-border pt-5',
         className
       )}
       {...props}
@@ -82,7 +82,7 @@ interface AdSlotDetailSectionProps extends React.HTMLAttributes<HTMLDivElement> 
 
 export function AdSlotDetailSection({ children, className, ...props }: AdSlotDetailSectionProps) {
   return (
-    <div className={cn('mt-8 border-t border-white/[0.06] pt-8', className)} {...props}>
+    <div className={cn('mt-8 border-t border-border pt-8', className)} {...props}>
       {children}
     </div>
   );

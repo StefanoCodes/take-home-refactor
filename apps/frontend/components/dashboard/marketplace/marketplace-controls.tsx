@@ -56,10 +56,10 @@ export function MarketplaceFilters({ type, available }: MarketplaceFiltersProps)
         value={type || "all"}
         onValueChange={(value) => updateParams("type", value)}
       >
-        <SelectTrigger className="w-[160px] border-white/10 bg-white/5 text-white/70">
+        <SelectTrigger className="w-[160px] border-border bg-muted text-foreground">
           <SelectValue placeholder="Slot Type" />
         </SelectTrigger>
-        <SelectContent className="border-white/10 bg-[#1a1822] text-white">
+        <SelectContent className="border-border bg-popover text-popover-foreground">
           {AD_SLOT_TYPES.map((opt) => (
             <SelectItem key={opt.value} value={opt.value}>
               {opt.label}
@@ -72,10 +72,10 @@ export function MarketplaceFilters({ type, available }: MarketplaceFiltersProps)
         value={available || "all"}
         onValueChange={(value) => updateParams("available", value)}
       >
-        <SelectTrigger className="w-[170px] border-white/10 bg-white/5 text-white/70">
+        <SelectTrigger className="w-[170px] border-border bg-muted text-foreground">
           <SelectValue placeholder="Availability" />
         </SelectTrigger>
-        <SelectContent className="border-white/10 bg-[#1a1822] text-white">
+        <SelectContent className="border-border bg-popover text-popover-foreground">
           {AVAILABILITY_OPTIONS.map((opt) => (
             <SelectItem key={opt.value} value={opt.value}>
               {opt.label}

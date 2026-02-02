@@ -1,6 +1,8 @@
 'use client';
 
+import * as React from 'react';
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Form,
   FormControl,
@@ -9,6 +11,12 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import {
   Select,
   SelectContent,
@@ -16,7 +24,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
 import { updateCampaignAction } from '@/lib/server-actions/campaigns/update-campaign';
 import {
   updateCampaignFormSchema,
@@ -133,28 +140,74 @@ export function UpdateCampaignForm({ campaign, onSuccess }: Props) {
           <FormField
             control={form.control}
             name="startDate"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Start date</FormLabel>
-                <FormControl>
-                  <Input type="date" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            render={({ field }) => {
+              const dateValue = field.value ? new Date(field.value + 'T00:00:00') : undefined;
+              return (
+                <FormItem>
+                  <FormLabel>Start date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="secondary"
+                          className="w-full justify-start font-normal"
+                        >
+                          {dateValue ? dateValue.toLocaleDateString() : 'Select date'}
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={dateValue}
+                        defaultMonth={dateValue}
+                        captionLayout="dropdown"
+                        onSelect={(date) => {
+                          field.onChange(date ? date.toISOString().slice(0, 10) : '');
+                        }}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
           />
           <FormField
             control={form.control}
             name="endDate"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>End date</FormLabel>
-                <FormControl>
-                  <Input type="date" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            render={({ field }) => {
+              const dateValue = field.value ? new Date(field.value + 'T00:00:00') : undefined;
+              return (
+                <FormItem>
+                  <FormLabel>End date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="secondary"
+                          className="w-full justify-start font-normal"
+                        >
+                          {dateValue ? dateValue.toLocaleDateString() : 'Select date'}
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={dateValue}
+                        defaultMonth={dateValue}
+                        captionLayout="dropdown"
+                        onSelect={(date) => {
+                          field.onChange(date ? date.toISOString().slice(0, 10) : '');
+                        }}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
           />
         </div>
         <FormField

@@ -9,10 +9,10 @@ export function FinalCta() {
       </div>
 
       <div className="relative text-center">
-        <h2 className="text-4xl font-semibold tracking-tight text-white/85">
+        <h2 className="text-4xl font-semibold tracking-tight text-foreground">
           Ready to get started?
         </h2>
-        <p className="mx-auto mt-4 max-w-md text-white/35">
+        <p className="mx-auto mt-4 max-w-md text-muted-foreground">
           Join the marketplace and start connecting with sponsors and publishers today.
         </p>
         <div className="mt-10">

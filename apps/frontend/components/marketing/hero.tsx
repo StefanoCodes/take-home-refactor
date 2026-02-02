@@ -5,13 +5,13 @@ export function Hero() {
   return (
     <section className="relative flex min-h-[75vh] flex-col items-center justify-center px-6 pt-12 text-center">
       {/* Ambient glow */}
-      <div className="pointer-events-none absolute top-1/4 left-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/[0.04] blur-[120px]" />
+      <div className="pointer-events-none absolute top-1/4 left-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/[0.12] blur-[120px] dark:bg-blue-500/[0.04]" />
 
-      <h1 className="text-hero mx-auto max-w-3xl text-white/90">
+      <h1 className="text-hero mx-auto max-w-3xl text-foreground">
         The sponsorship marketplace for modern brands
       </h1>
 
-      <p className="mx-auto mt-6 max-w-lg text-lg leading-relaxed text-white/40">
+      <p className="mx-auto mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
         Connect with premium publishers. Book ad placements across newsletters, podcasts, display,
         and video — all in one place.
       </p>
@@ -22,7 +22,7 @@ export function Hero() {
         </Button>
         <Link
           href="#how-it-works"
-          className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-7 py-3 text-sm font-medium text-white/60 transition-colors hover:border-white/[0.12] hover:text-white/80"
+          className="rounded-xl border border-border px-7 py-3 text-sm font-medium text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground"
         >
           How It Works
         </Link>
@@ -30,8 +30,8 @@ export function Hero() {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2">
-        <div className="h-8 w-5 rounded-full border border-white/[0.12] p-1">
-          <div className="mx-auto h-1.5 w-1 animate-bounce rounded-full bg-white/30" />
+        <div className="h-8 w-5 rounded-full border border-border p-1">
+          <div className="mx-auto h-1.5 w-1 animate-bounce rounded-full bg-muted-foreground/50" />
         </div>
       </div>
     </section>

@@ -19,20 +19,20 @@ export function formatDateForInput(dateStr: string): string {
 
 /** Tailwind class map for campaign status badges. */
 export const campaignStatusColors: Record<string, string> = {
-	DRAFT: "bg-white/10 text-text-muted",
-	PENDING_REVIEW: "bg-white/10 text-text-muted",
-	APPROVED: "bg-white/10 text-text-muted",
-	ACTIVE: "bg-green-500/15 text-green-400",
-	PAUSED: "bg-yellow-500/15 text-yellow-400",
-	COMPLETED: "bg-blue-500/15 text-blue-400",
-	CANCELLED: "bg-white/10 text-text-muted",
+	DRAFT: "bg-muted text-muted-foreground",
+	PENDING_REVIEW: "bg-muted text-muted-foreground",
+	APPROVED: "bg-muted text-muted-foreground",
+	ACTIVE: "bg-green-500/15 text-green-600 dark:text-green-400",
+	PAUSED: "bg-yellow-500/15 text-yellow-600 dark:text-yellow-400",
+	COMPLETED: "bg-blue-500/15 text-blue-600 dark:text-blue-400",
+	CANCELLED: "bg-muted text-muted-foreground",
 };
 
 /** Tailwind class map for ad slot type badges. */
 export const adSlotTypeColors: Record<string, string> = {
-	DISPLAY: "bg-blue-400/10 text-blue-300 ring-1 ring-blue-400/20",
-	VIDEO: "bg-rose-400/10 text-rose-300 ring-1 ring-rose-400/20",
-	NATIVE: "bg-emerald-400/10 text-emerald-300 ring-1 ring-emerald-400/20",
-	NEWSLETTER: "bg-violet-400/10 text-violet-300 ring-1 ring-violet-400/20",
-	PODCAST: "bg-amber-400/10 text-amber-300 ring-1 ring-amber-400/20",
+	DISPLAY: "bg-blue-500/15 text-blue-600 ring-1 ring-blue-500/25 dark:text-blue-300 dark:ring-blue-400/20",
+	VIDEO: "bg-rose-500/15 text-rose-600 ring-1 ring-rose-500/25 dark:text-rose-300 dark:ring-rose-400/20",
+	NATIVE: "bg-emerald-500/15 text-emerald-600 ring-1 ring-emerald-500/25 dark:text-emerald-300 dark:ring-emerald-400/20",
+	NEWSLETTER: "bg-violet-500/15 text-violet-600 ring-1 ring-violet-500/25 dark:text-violet-300 dark:ring-violet-400/20",
+	PODCAST: "bg-amber-500/15 text-amber-600 ring-1 ring-amber-500/25 dark:text-amber-300 dark:ring-amber-400/20",
 };

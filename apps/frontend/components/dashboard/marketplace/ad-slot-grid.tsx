@@ -27,7 +27,7 @@ export async function AdSlotGrid({ page = 1, limit = 6, type, available }: AdSlo
       <MarketplaceFilters type={type} available={available} />
 
       {!hasAdSlots ? (
-        <div className="rounded-2xl border border-dashed border-white/10 bg-white/2 p-16 text-center text-white/40">
+        <div className="rounded-2xl border border-dashed border-border bg-muted/50 p-16 text-center text-muted-foreground">
           {hasActiveFilters
             ? 'No ad slots match the selected filters.'
             : 'No ad slots available at the moment.'}
@@ -38,32 +38,32 @@ export async function AdSlotGrid({ page = 1, limit = 6, type, available }: AdSlo
             <Link key={slot.id} href={`/marketplace/${slot.id}`}>
               <AdSlotCardRoot>
                 <AdSlotCardHeader>
-                  <h3 className="font-semibold tracking-tight text-white/90">{slot.name}</h3>
+                  <h3 className="font-semibold tracking-tight text-foreground">{slot.name}</h3>
                   <AdSlotCardTypeBadge type={slot.type} />
                 </AdSlotCardHeader>
 
                 {slot.publisher && (
-                  <p className="mb-2 text-sm text-white/40">by {slot.publisher.name}</p>
+                  <p className="mb-2 text-sm text-muted-foreground">by {slot.publisher.name}</p>
                 )}
 
                 {slot.description && (
-                  <p className="mb-4 text-sm leading-relaxed text-white/35 line-clamp-2">
+                  <p className="mb-4 text-sm leading-relaxed text-muted-foreground line-clamp-2">
                     {slot.description}
                   </p>
                 )}
 
-                <AdSlotCardFooter className="mt-auto border-t border-white/[0.06] pt-4">
+                <AdSlotCardFooter className="mt-auto border-t border-border pt-4">
                   <span
-                    className={`flex items-center gap-1.5 text-sm font-medium ${slot.isAvailable ? 'text-emerald-400/90' : 'text-white/30'}`}
+                    className={`flex items-center gap-1.5 text-sm font-medium ${slot.isAvailable ? 'text-emerald-500 dark:text-emerald-400/90' : 'text-muted-foreground'}`}
                   >
                     <span
-                      className={`inline-block h-1.5 w-1.5 rounded-full ${slot.isAvailable ? 'bg-emerald-400' : 'bg-white/20'}`}
+                      className={`inline-block h-1.5 w-1.5 rounded-full ${slot.isAvailable ? 'bg-emerald-500 dark:bg-emerald-400' : 'bg-muted-foreground/30'}`}
                     />
                     {slot.isAvailable ? 'Available' : 'Booked'}
                   </span>
-                  <span className="text-lg font-semibold tracking-tight text-white/80">
+                  <span className="text-lg font-semibold tracking-tight text-foreground">
                     ${Number(slot.basePrice).toLocaleString()}
-                    <span className="text-xs font-normal text-white/35">/mo</span>
+                    <span className="text-xs font-normal text-muted-foreground">/mo</span>
                   </span>
                 </AdSlotCardFooter>
               </AdSlotCardRoot>

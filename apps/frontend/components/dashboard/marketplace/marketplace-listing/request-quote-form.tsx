@@ -65,7 +65,7 @@ export function RequestQuoteButton({ adSlotId, userEmail, existingQuote }: Props
           <Clock className="mr-2 size-4" />
           Quote Requested
         </Button>
-        <p className="text-center text-sm text-white/40">
+        <p className="text-center text-sm text-muted-foreground">
           We&apos;ll get back to you within 24 hours
         </p>
       </div>
@@ -121,7 +121,7 @@ export function RequestQuoteButton({ adSlotId, userEmail, existingQuote }: Props
                     <input
                       {...field}
                       placeholder="Acme Inc."
-                      className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-white/80 placeholder:text-white/25 focus:border-white/15 focus:outline-none focus:ring-1 focus:ring-white/10"
+                      className="w-full rounded-lg border border-border bg-muted px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
                     />
                   </FormControl>
                   <FormMessage />
@@ -140,7 +140,7 @@ export function RequestQuoteButton({ adSlotId, userEmail, existingQuote }: Props
                       {...field}
                       type="email"
                       placeholder="you@company.com"
-                      className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-white/80 placeholder:text-white/25 focus:border-white/15 focus:outline-none focus:ring-1 focus:ring-white/10"
+                      className="w-full rounded-lg border border-border bg-muted px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
                     />
                   </FormControl>
                   <FormMessage />
@@ -159,7 +159,7 @@ export function RequestQuoteButton({ adSlotId, userEmail, existingQuote }: Props
                       {...field}
                       type="tel"
                       placeholder="+1 (555) 000-0000"
-                      className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-white/80 placeholder:text-white/25 focus:border-white/15 focus:outline-none focus:ring-1 focus:ring-white/10"
+                      className="w-full rounded-lg border border-border bg-muted px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
                     />
                   </FormControl>
                   <FormMessage />
@@ -178,7 +178,7 @@ export function RequestQuoteButton({ adSlotId, userEmail, existingQuote }: Props
                       {...field}
                       rows={3}
                       placeholder="Tell us about your sponsorship needs..."
-                      className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-white/80 placeholder:text-white/25 focus:border-white/15 focus:outline-none focus:ring-1 focus:ring-white/10"
+                      className="w-full rounded-lg border border-border bg-muted px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
                     />
                   </FormControl>
                   <FormMessage />

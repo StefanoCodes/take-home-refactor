@@ -11,7 +11,7 @@ export function AdSlotCardRoot({ children, className, ...props }: AdSlotCardRoot
   return (
     <Card
       className={cn(
-        'group/card transition-all duration-200 ease-out hover:border-white/[0.12] hover:bg-gradient-to-b hover:from-white/[0.08] hover:to-white/[0.03] hover:-translate-y-0.5',
+        'group/card transition-all duration-200 ease-out hover:border-border hover:bg-gradient-to-b hover:from-foreground/[0.05] hover:to-foreground/[0.01] hover:-translate-y-0.5',
         className
       )}
       {...props}
@@ -42,7 +42,7 @@ export function AdSlotCardTypeBadge({ type, className, ...props }: AdSlotCardTyp
     <span
       className={cn(
         'rounded-full px-2.5 py-0.5 text-[11px] font-medium tracking-wide uppercase',
-        adSlotTypeColors[type] ?? 'bg-white/10 text-text-muted',
+        adSlotTypeColors[type] ?? 'bg-muted text-text-muted',
         className
       )}
       {...props}

@@ -29,8 +29,8 @@ export default async function MarketplacePage({ searchParams }: MarketplacePageP
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-white/90">Marketplace</h1>
-        <p className="mt-1 text-white/40">Browse available ad slots from our publishers</p>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">Marketplace</h1>
+        <p className="mt-1 text-muted-foreground">Browse available ad slots from our publishers</p>
       </div>
       <Suspense key={`${page}-${limit}-${type}-${available}`} fallback={<AdSlotGridSkeleton />}>
         <AdSlotGrid page={page} limit={limit} type={type} available={available} />

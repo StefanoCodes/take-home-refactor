@@ -38,17 +38,17 @@ export function NewsletterSignup() {
 
   return (
     <section className="mx-auto w-full max-w-6xl px-6 py-24">
-      <div className="rounded-2xl border border-white/[0.07] bg-gradient-to-b from-white/[0.04] to-transparent p-8 text-center primary-card-shadow sm:p-12">
-        <h2 className="text-2xl font-semibold tracking-tight text-white/85 sm:text-3xl">
+      <div className="rounded-2xl border border-border bg-gradient-to-b from-foreground/[0.03] to-transparent p-8 text-center shadow-sm sm:p-12 dark:primary-card-shadow">
+        <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
           Stay in the loop
         </h2>
-        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-white/35">
+        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
           Get the latest updates on new publishers, platform features, and sponsorship tips
           delivered to your inbox.
         </p>
 
         {subscribed ? (
-          <p className="mt-8 text-sm font-medium text-emerald-400/90">
+          <p className="mt-8 text-sm font-medium text-emerald-500 dark:text-emerald-400/90">
             Thanks for subscribing! We&apos;ll be in touch.
           </p>
         ) : (
@@ -60,18 +60,18 @@ export function NewsletterSignup() {
               type="email"
               placeholder="you@company.com"
               {...form.register('email')}
-              className="flex-1 rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3 text-sm text-white/80 placeholder:text-white/25 focus:border-white/15 focus:outline-none focus:ring-1 focus:ring-white/10"
+              className="flex-1 rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
             />
             <button
               type="submit"
               disabled={isPending}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/[0.08] px-6 py-3 text-sm font-semibold text-white/80 ring-1 ring-white/[0.08] transition-colors hover:bg-white/[0.12] disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-muted px-6 py-3 text-sm font-semibold text-foreground ring-1 ring-border transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:opacity-50"
             >
               Subscribe
               {isPending && <Loader2 className="size-4 animate-spin" />}
             </button>
             {form.formState.errors.email && (
-              <p className="text-xs text-red-400 sm:hidden">
+              <p className="text-xs text-red-500 dark:text-red-400 sm:hidden">
                 {form.formState.errors.email.message}
               </p>
             )}
