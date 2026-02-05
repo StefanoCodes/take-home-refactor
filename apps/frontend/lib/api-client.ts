@@ -53,30 +53,12 @@ import {
 // Auth
 import { getMeOutputSchema } from '@anvara/schemas';
 import { getUserRoleOutputSchema } from '@anvara/schemas';
-import { cookies } from 'next/headers';
 import { Logger } from './logger';
 
 export const $fetch = createFetch({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   credentials: 'include',
   disableValidation: process.env.NODE_ENV !== 'development',
-  onRequest: async (context) => {
-    if (typeof window === 'undefined') {
-      try {
-        const cookieStore = await cookies();
-        const cookieHeader = cookieStore
-          .getAll()
-          .map((c) => `${c.name}=${c.value}`)
-          .join('; ');
-        if (cookieHeader) {
-          context.headers.set('Cookie', cookieHeader);
-        }
-      } catch {
-        // cookies() throws outside of a request context (e.g. during build)
-      }
-    }
-    return context;
-  },
   retry: {
     type: 'linear',
     attempts: 3,

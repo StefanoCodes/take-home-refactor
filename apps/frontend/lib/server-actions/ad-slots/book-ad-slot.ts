@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { authActionClient, ActionError } from '@/lib/action-client';
 import { $fetch } from '@/lib/api-client';
+import { withAuthHeaders } from '@/lib/server-actions/with-auth-headers';
 import { bookAdSlotSchema } from '@/lib/validations/ad-slots';
 
 export const bookAdSlotAction = authActionClient
@@ -13,6 +14,7 @@ export const bookAdSlotAction = authActionClient
   .inputSchema(bookAdSlotSchema)
   .action(async ({ parsedInput }) => {
     const { adSlotId, sponsorId, message } = parsedInput;
+    const authHeaders = await withAuthHeaders();
 
     const { data, error } = await $fetch('@post/api/ad-slots/:id/book', {
       params: { id: adSlotId },
@@ -20,6 +22,7 @@ export const bookAdSlotAction = authActionClient
         sponsorId,
         message,
       },
+      ...authHeaders,
     });
 
     if (error) {

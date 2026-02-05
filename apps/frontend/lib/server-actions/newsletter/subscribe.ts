@@ -2,6 +2,7 @@
 
 import { actionClient, ActionError } from '@/lib/action-client';
 import { $fetch } from '@/lib/api-client';
+import { withAuthHeaders } from '@/lib/server-actions/with-auth-headers';
 import { subscribeNewsletterInputSchema } from '@/lib/validations/newsletter';
 
 export const subscribeNewsletterAction = actionClient
@@ -12,9 +13,11 @@ export const subscribeNewsletterAction = actionClient
   .inputSchema(subscribeNewsletterInputSchema)
   .action(async ({ parsedInput }) => {
     const { email } = parsedInput;
+    const authHeaders = await withAuthHeaders();
 
     const { data, error } = await $fetch('@post/api/newsletter', {
       body: { email },
+      ...authHeaders,
     });
 
     if (error) {

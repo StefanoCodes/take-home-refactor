@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { authActionClient, ActionError } from '@/lib/action-client';
 import { $fetch } from '@/lib/api-client';
+import { withAuthHeaders } from '@/lib/server-actions/with-auth-headers';
 import { createCampaignInputSchema } from '@/lib/validations/campaigns';
 
 export const createCampaignAction = authActionClient
@@ -12,8 +13,10 @@ export const createCampaignAction = authActionClient
   })
   .inputSchema(createCampaignInputSchema)
   .action(async ({ parsedInput }) => {
+    const authHeaders = await withAuthHeaders();
     const { data, error } = await $fetch('@post/api/campaigns', {
       body: parsedInput,
+      ...authHeaders,
     });
 
     if (error) {

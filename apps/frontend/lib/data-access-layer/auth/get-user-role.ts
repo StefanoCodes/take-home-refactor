@@ -3,6 +3,7 @@ import 'server-only';
 import { $fetch } from '@/lib/api-client';
 import type { GetUserRoleOutput } from '@anvara/schemas';
 import { isAuthenticated } from '@/lib/auth-helpers.server';
+import { getAuthHeaders } from '@/lib/data-access-layer/auth-headers';
 import { redirect } from 'next/navigation';
 
 export async function getUserRole(userId: string): Promise<GetUserRoleOutput> {
@@ -10,8 +11,10 @@ export async function getUserRole(userId: string): Promise<GetUserRoleOutput> {
 
   if (!isLoggedIn) redirect('/login');
 
+  const authHeaders = await getAuthHeaders();
   const { data, error } = await $fetch('@get/api/auth/role/:userId', {
     params: { userId },
+    ...(authHeaders && { headers: authHeaders }),
   });
 
   if (error) {

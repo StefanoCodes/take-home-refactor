@@ -4,7 +4,7 @@ import './globals.css';
 import { Nav } from '@/components/layout/navbar/nav';
 import localFont from 'next/font/local';
 import { GoogleTagManager } from '@next/third-parties/google';
-import { ThemeProvider } from '@/components/providers/theme-provider';
+import { Providers } from '@/components/providers/providers';
 
 const neueHaas = localFont({
   src: '../public/fonts/NHaasGroteskDSStd-55Rg.otf',
@@ -38,16 +38,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <GoogleTagManager gtmId="G-NWHC9C48N5" />
       <body className={`min-h-dvh pt-(--navbar-height)! antialiased ${neueHaas.variable}`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
           <Nav />
           {children}
           <Toaster richColors position="top-center" />
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

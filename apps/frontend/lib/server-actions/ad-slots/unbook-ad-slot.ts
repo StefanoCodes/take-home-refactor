@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { authActionClient, ActionError } from '@/lib/action-client';
 import { $fetch } from '@/lib/api-client';
+import { withAuthHeaders } from '@/lib/server-actions/with-auth-headers';
 import { unbookAdSlotSchema } from '@/lib/validations/ad-slots';
 
 export const unbookAdSlotAction = authActionClient
@@ -13,9 +14,11 @@ export const unbookAdSlotAction = authActionClient
   .inputSchema(unbookAdSlotSchema)
   .action(async ({ parsedInput }) => {
     const { adSlotId } = parsedInput;
+    const authHeaders = await withAuthHeaders();
 
     const { data, error } = await $fetch('@post/api/ad-slots/:id/unbook', {
       params: { id: adSlotId },
+      ...authHeaders,
     });
 
     if (error) {

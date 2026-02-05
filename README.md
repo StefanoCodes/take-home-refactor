@@ -64,6 +64,14 @@ Every `$fetch` call is fully typed end-to-end. Writing `$fetch("@get/api/campaig
 
 ---
 
+### React Query: Reusable Query Options + Key Factory
+
+React Query is configured with reusable `queryOptions(...)` builders instead of custom hooks. This keeps queries composable and parameter-driven (e.g. pagination, filters) without adding another abstraction layer. You pass the parameters in when calling `useQuery`, which keeps the scope explicit and makes the options easy to reuse across screens and SSR/CSR boundaries.
+
+A centralized query key factory (`lib/react-query/keys.ts`) provides a consistent, hierarchical structure for cache keys. This makes cache invalidation predictable and safe, and avoids key drift as the app grows.
+
+---
+
 ### Data Access Layer (`lib/data-access-layer/`)
 
 Instead of calling `$fetch` directly from page components, all data fetching goes through a **data access layer**. Every function in this layer does two things: checks authentication first via `isAuthenticated()`, then fetches data.

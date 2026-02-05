@@ -1,5 +1,10 @@
+'use client';
+
 import Link from 'next/link';
-import { getAdSlots } from '@/lib/data-access-layer/ad-slots/get-ad-slots';
+import { useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'next/navigation';
+import { createAdSlotsQueryOptions } from '@/lib/react-query/queries/ad-slots';
 import {
   AdSlotCardRoot,
   AdSlotCardHeader,
@@ -7,17 +12,63 @@ import {
   AdSlotCardFooter,
 } from './ad-slot-card';
 import { MarketplaceFilters, MarketplacePagination } from './marketplace-controls';
+import { AdSlotGridSkeleton } from './ad-slot-grid-skeleton';
+import { Button } from '@/components/ui/button';
 
-interface AdSlotGridProps {
-  page?: number;
-  limit?: number;
-  type?: string;
-  available?: string;
-}
+const DEFAULT_LIMIT = 6;
 
-export async function AdSlotGrid({ page = 1, limit = 6, type, available }: AdSlotGridProps) {
-  const result = await getAdSlots({ page, limit, type, available });
-  const { data: adSlots, pagination } = result;
+export function AdSlotGrid() {
+  const searchParams = useSearchParams();
+
+  const pageParam = searchParams.get('page');
+  const limitParam = searchParams.get('limit');
+  const typeParam = searchParams.get('type');
+  const availableParam = searchParams.get('available');
+
+  const page = Math.max(1, Number(pageParam) || 1);
+  const limit = Number(limitParam) || DEFAULT_LIMIT;
+  const type = typeParam && typeParam !== 'all' ? typeParam : undefined;
+  const available = availableParam && availableParam !== 'all' ? availableParam : undefined;
+
+  const queryParams = useMemo(
+    () => ({
+      page,
+      limit,
+      ...(type && { type }),
+      ...(available && { available }),
+    }),
+    [page, limit, type, available]
+  );
+
+  const { data, isLoading, isError, error, refetch } = useQuery(
+    createAdSlotsQueryOptions(queryParams)
+  );
+
+  if (isLoading) {
+    return <AdSlotGridSkeleton />;
+  }
+
+  if (isError) {
+    return (
+      <div className="rounded-2xl border border-dashed border-border bg-muted/50 p-12 text-center">
+        <p className="text-sm text-muted-foreground">
+          {error?.message || 'Failed to load ad slots. Please try again.'}
+        </p>
+        <Button className="mt-4" onClick={() => refetch()} variant="secondary">
+          Retry
+        </Button>
+      </div>
+    );
+  }
+
+  const adSlots = data?.data ?? [];
+  const pagination = data?.pagination ?? {
+    page,
+    limit,
+    total: 0,
+    totalPages: 0,
+    hasMore: false,
+  };
 
   const hasAdSlots = adSlots.length > 0;
   const hasActiveFilters = !!type || !!available;

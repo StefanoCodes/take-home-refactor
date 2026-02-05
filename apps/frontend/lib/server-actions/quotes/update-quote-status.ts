@@ -2,6 +2,7 @@
 
 import { authActionClient, ActionError } from '@/lib/action-client';
 import { $fetch } from '@/lib/api-client';
+import { withAuthHeaders } from '@/lib/server-actions/with-auth-headers';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { updateQuoteStatusInputSchema } from '@/lib/validations/quotes';
@@ -18,10 +19,12 @@ export const updateQuoteStatusAction = authActionClient
   .inputSchema(inputSchema)
   .action(async ({ parsedInput }) => {
     const { quoteId, status } = parsedInput;
+    const authHeaders = await withAuthHeaders();
 
     const { data, error } = await $fetch('@patch/api/quotes/:id/status', {
       params: { id: quoteId },
       body: { status },
+      ...authHeaders,
     });
 
     if (error) {

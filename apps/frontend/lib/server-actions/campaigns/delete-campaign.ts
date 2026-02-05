@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { authActionClient, ActionError } from '@/lib/action-client';
 import { $fetch } from '@/lib/api-client';
+import { withAuthHeaders } from '@/lib/server-actions/with-auth-headers';
 import { deleteCampaignSchema } from '@/lib/validations/campaigns';
 
 export const deleteCampaignAction = authActionClient
@@ -13,9 +14,11 @@ export const deleteCampaignAction = authActionClient
   .inputSchema(deleteCampaignSchema)
   .action(async ({ parsedInput }) => {
     const { campaignId } = parsedInput;
+    const authHeaders = await withAuthHeaders();
 
     const { error } = await $fetch('@delete/api/campaigns/:id', {
       params: { id: campaignId },
+      ...authHeaders,
     });
 
     if (error) {

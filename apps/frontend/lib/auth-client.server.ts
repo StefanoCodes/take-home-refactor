@@ -18,9 +18,7 @@ export const auth = betterAuth({
     minPasswordLength: 6,
   },
   plugins: [nextCookies()],
-  advanced: {
-    disableCSRFCheck: true,
-  },
+  trustedOrigins: [process.env.BETTER_AUTH_URL || 'http://localhost:3847'],
 });
 
 export type Session = typeof auth.$Infer.Session.session;
